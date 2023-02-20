@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[Adresa]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+	[Ulice] NVARCHAR(100) NULL,
+    [CisloPopisne] NVARCHAR(16) NULL,
+    [CisloOrientacni] NVARCHAR(16) NULL,
+    [PSC] NVARCHAR(16) NULL,
+    [Mesto] NVARCHAR(100) NULL,
+    [Okres] NVARCHAR(100) NULL,
+    [Kraj] NVARCHAR(100) NULL,
+    [Zeme] NVARCHAR(100) NULL,
+)

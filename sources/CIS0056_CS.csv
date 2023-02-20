@@ -1,0 +1,78 @@
+KODJAZ,AKRCIS,KODCIS,CHODNOTA,ZKRTEXT,TEXT,ADMPLOD,ADMNEPO,EGRFORMA
+"CS","FORMA",56,"000","Zatím neurčeno","Zatím neurčeno","01.01.1900","09.09.9999",
+"CS","FORMA",56,"101","Fyz. os. podnikající dle živ. zákona","Fyzická osoba podnikající dle živnostenského zákona","01.01.1900","09.09.9999","SP"
+"CS","FORMA",56,"105","Fyz.osoba ost.","Fyzická osoba podnikající dle jiných zákonů než živnostenského a zákona o zemědělství","01.01.1900","09.09.9999","SP"
+"CS","FORMA",56,"107","Zem.podnik. - FO","Zemědělský podnikatel - fyzická osoba","01.05.2004","09.09.9999","SP"
+"CS","FORMA",56,"111","Veřejná obch.společnost","Veřejná obchodní společnost","01.01.1900","09.09.9999","PA"
+"CS","FORMA",56,"112","Společnost s r.o.","Společnost s ručením omezeným","01.01.1900","09.09.9999","LL"
+"CS","FORMA",56,"113","Společnost komanditní","Společnost komanditní","01.01.1900","09.09.9999","PA"
+"CS","FORMA",56,"115","Společný podnik","Společný podnik","01.01.1900","09.09.9999","PA"
+"CS","FORMA",56,"116","Zájmové sdružení","Zájmové sdružení","01.01.1900","09.09.9999","NB"
+"CS","FORMA",56,"117","Nadace","Nadace","01.01.1900","09.09.9999","NB"
+"CS","FORMA",56,"118","Nadační fond","Nadační fond","01.01.1998","09.09.9999","NB"
+"CS","FORMA",56,"121","Akciová společnost","Akciová společnost","01.01.1900","09.09.9999","LL"
+"CS","FORMA",56,"141","Obecně prospěšná spol.","Obecně prospěšná společnost","01.01.1996","09.09.9999","NB"
+"CS","FORMA",56,"145","Společen.vlast.jednot.","Společenství vlastníků jednotek","01.04.2000","09.09.9999","NB"
+"CS","FORMA",56,"151","Komoditní burza","Komoditní burza","01.01.2010","09.09.9999","GO"
+"CS","FORMA",56,"161","Ústav","Ústav","01.01.2014","09.09.9999",
+"CS","FORMA",56,"205","Družstvo","Družstvo","01.01.1991","09.09.9999","LL"
+"CS","FORMA",56,"301","Státní podnik","Státní podnik","01.01.1900","09.09.9999","LL"
+"CS","FORMA",56,"313","Česká národní banka","Česká národní banka","01.01.1993","09.09.9999","GO"
+"CS","FORMA",56,"325","Org. složka státu","Organizační složka státu","01.01.2001","09.09.9999","GO"
+"CS","FORMA",56,"326","Stálý rozhodčí soud","Stálý rozhodčí soud","01.04.2013","09.09.9999",
+"CS","FORMA",56,"331","Příspěvková organizace","Příspěvková organizace","01.01.1900","09.09.9999","GO"
+"CS","FORMA",56,"352","Státní organizace Správa železnic","Státní organizace Správa železnic","01.01.1993","09.09.9999","GO"
+"CS","FORMA",56,"353","Rada pro veř. dohled nad auditem","Rada pro veřejný dohled nad auditem","01.04.2009","09.09.9999","GO"
+"CS","FORMA",56,"361","Veřejnoprávní instituce","Veřejnoprávní instituce (ČT,ČRo,ČTK)","01.01.1993","09.09.9999","GO"
+"CS","FORMA",56,"381","Fond (ze zákona)","Fond (ze zákona)","01.06.1991","09.09.9999","GO"
+"CS","FORMA",56,"391","Zdravotní pojišťovna","Zdravotní pojišťovna","01.05.1993","09.09.9999","GO"
+"CS","FORMA",56,"421","Odšt.záv.zahr.práv.os.","Odštěpný závod zahraniční právnické osoby","01.01.1900","09.09.9999","LL"
+"CS","FORMA",56,"422","Organiz.složka zahr.nadač.fondu","Organizační složka zahraničního nadačního fondu","01.01.2014","09.09.9999",
+"CS","FORMA",56,"423","Organi.složka zahr.nadace","Organizační složka zahraniční nadace","01.01.2014","09.09.9999",
+"CS","FORMA",56,"424","Zahr.fyzická osoba","Zahraniční fyzická osoba","01.01.2014","09.09.9999",
+"CS","FORMA",56,"425","Odštěp.závod zahr.fyz.osoby","Odštěpný závod zahraniční fyzické osoby","01.01.2014","09.09.9999",
+"CS","FORMA",56,"426","Zastoupení zahr. banky","Zastoupení zahraniční banky","01.01.2017","09.09.9999",
+"CS","FORMA",56,"501","Odštěp.záv.zaps.v ob.r.","Odštěpný závod nebo jiná organizační složka podniku zapisující se do obchodního rejstříku","01.01.1900","09.09.9999","LL"
+"CS","FORMA",56,"521","Sam.drob.provozovna ob.","Samostatná drobná provozovna obecního úřadu","01.01.1900","09.09.9999","GO"
+"CS","FORMA",56,"541","Podílový, penzijní fond","Podílový, penzijní fond","01.09.1993","09.09.9999","LL"
+"CS","FORMA",56,"601","Vysoká škola (veřejná, státní)","Vysoká škola (veřejná, státní)","01.01.1900","09.09.9999","GO"
+"CS","FORMA",56,"641","Školská právnická osoba","Školská právnická osoba","01.01.2005","09.09.9999","GO"
+"CS","FORMA",56,"661","Veř. výzkumná instituce","Veřejná výzkumná instituce","13.09.2005","09.09.9999","GO"
+"CS","FORMA",56,"704","Zvl.org.pro zast.čes.zájmů v mezinár.nevlád.organizacích","Zvláštní organizace pro zastoupení českých zájmů v mezinárodních nevládních organizacích","01.01.2014","09.09.9999",
+"CS","FORMA",56,"705","Podnik nebo hosp.zaříz.","Podnik nebo hospodářské zařízení sdružení","01.01.1900","09.09.9999","ND"
+"CS","FORMA",56,"706","Spolek","Spolek","01.01.2014","09.09.9999",
+"CS","FORMA",56,"707","Odborová organizace","Odborová organizace","01.11.2017","09.09.9999",
+"CS","FORMA",56,"708","Org. zaměstnavatelů","Organizace zaměstnavatelů","01.11.2017","09.09.9999",
+"CS","FORMA",56,"711","Politická strana, hnutí","Politická strana, politické hnutí","01.01.1900","09.09.9999","NB"
+"CS","FORMA",56,"715","Pod.nebo hos.zař.pol.s.","Podnik nebo hospodářské zařízení politické strany","01.01.1900","09.09.9999",
+"CS","FORMA",56,"721","Církve a náb.společnosti","Církve a náboženské společnosti","01.01.1900","09.09.9999","NB"
+"CS","FORMA",56,"722","Evid.círk.práv.osoby","Evidované církevní právnické osoby","01.01.2017","09.09.9999",
+"CS","FORMA",56,"723","Svaz církví a náb.spol.","Svazy církví a náboženských společností","01.01.2017","09.09.9999",
+"CS","FORMA",56,"733","Org.jedn.odborové org. a org.zaměstnavatelů","Organizační jednotka odborové organizace a organizace zaměstnavatelů","01.01.2014","09.09.9999",
+"CS","FORMA",56,"734","Org.jedn.zvl.org.pro zast.čes.záj.v mez.nevl.org.","Organizační jednotka zvláštní organizace pro zastoupení českých zájmů v mezinárodních nevládních organizacích","01.01.2014","09.09.9999",
+"CS","FORMA",56,"736","Pobočný spolek","Pobočný spolek","01.01.2014","09.09.9999",
+"CS","FORMA",56,"741","Stav.org.-profesní kom.","Stavovská organizace - profesní komora","01.01.1900","09.09.9999","NB"
+"CS","FORMA",56,"745","Komora s výj.prof.komor","Komora (s výjimkou profesních komor)","01.01.1992","09.09.9999","NB"
+"CS","FORMA",56,"751","Zájm.sdružení práv.osob","Zájmové sdružení právnických osob","01.01.1992","09.09.9999","NB"
+"CS","FORMA",56,"761","Honební společenstvo","Honební společenstvo","01.07.2002","09.09.9999","NB"
+"CS","FORMA",56,"771","Dobrovolný svazek obcí","Dobrovolný svazek obcí","01.01.2001","09.09.9999","NB"
+"CS","FORMA",56,"801","Obec nebo městská část hlavního města Prahy","Obec nebo městská část hlavního města Prahy","01.01.1900","09.09.9999","GO"
+"CS","FORMA",56,"804","Kraj a hl.m.Praha","Kraj a hl.m.Praha","01.11.2000","09.09.9999","GO"
+"CS","FORMA",56,"805","Reg.rada regionu soudr.","Regionální rada regionu soudržnosti","01.07.2006","31.12.2021","GO"
+"CS","FORMA",56,"901","Zast.orgán jiných států","Zastupitelský orgán jiných států","01.01.1900","09.09.9999",
+"CS","FORMA",56,"906","Zahraniční spolek","Zahraniční spolek","01.01.2014","09.09.9999",
+"CS","FORMA",56,"907","Mezinárodní odborová organizace","Mezinárodní odborová organizace","01.01.2014","09.09.9999",
+"CS","FORMA",56,"908","Mezinárodní organizace zaměstnavetelů","Mezinárodní organizace zaměstnavatelů","01.01.2014","09.09.9999",
+"CS","FORMA",56,"911","Zahr.kult.střed.,agent.","Zahraniční kulturní, informační středisko, rozhlasová, tisková a televizní agentura","01.01.1900","09.09.9999","ND"
+"CS","FORMA",56,"921","Mezinár.nevlád.org.","Mezinárodní nevládní organizace","01.01.1900","09.09.9999","ND"
+"CS","FORMA",56,"922","Org.jed.mezinár.nevládní org.","Organizační jednotka mezinárodní nevládní organizace","01.07.2010","09.09.9999","ND"
+"CS","FORMA",56,"931","Ev.hosp.zájm.sdružení","Evropské hospodářské zájmové sdružení","15.06.2004","09.09.9999","NB"
+"CS","FORMA",56,"932","Evropská společnost","Evropská společnost","14.12.2004","09.09.9999","LL"
+"CS","FORMA",56,"933","Evr.družst.společnost","Evropská družstevní společnost","18.08.2006","09.09.9999","LL"
+"CS","FORMA",56,"936","Zahraniční pobočný spolek","Zahraniční pobočný spolek","01.01.2014","09.09.9999",
+"CS","FORMA",56,"941","Evr.seskupení úz.spolupr.","Evropské seskupení pro územní spolupráci","01.01.2008","09.09.9999","ND"
+"CS","FORMA",56,"950","Subjekt práv.řád.neupravený","Subjekt právním řádem výslovně neupravený","01.07.2007","09.09.9999","ND"
+"CS","FORMA",56,"951","Mezinár. vojenská org. vzniklá na základě mezinár. smlouvy","Mezinárodní vojenská organizace vzniklá na základě mezinárodní smlouvy","01.01.2018","09.09.9999",
+"CS","FORMA",56,"952","Konsorcium evropské výzkumné infrastruktury","Konsorcium evropské výzkumné infrastruktury","01.01.2020","09.09.9999",
+"CS","FORMA",56,"960","Právnická osoba zříz.zvl.zák.zap.do VR","Právnická osoba zřízená zvláštním zákonem zapisovaná do veřejného rejstříku","01.06.2016","09.09.9999",
+

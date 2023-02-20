@@ -1,0 +1,55 @@
+-----------------------------------------------------------------------------------------------
+
+1)	tabulka musí být v první normální formì (1NF)
+2)	každý neklíèový atribut musí být plnì závislý na každém kandidátním klíèi 
+	(neklíèovým atributem rozumíme atribut, který není souèástí žádného kandidátního klíèe)
+
+	všechny ne-klíèové sloupce musí být funkènì závislé na celém primárním klíèi.
+
+
+
+Kandidátní klíè je jeden nebo více sloupcù, které lze použít jako primární klíè pro tabulku 
+v relaèní databázi. Kandidátní klíè musí být unikátní a nemìnný pro každý øádek v tabulce.
+
+Nekandidátní klíè je sloupec nebo skupina sloupcù, které lze použít jako primární klíè, 
+ale nejsou využity jako takový. Tyto sloupce mohou být unikátní, 
+ale nemusí být, a mohou být mìnitelné.
+
+Rozdíl mezi kandidátním a nekandidátním klíèem spoèívá v tom, 
+že kandidátní klíè je jednoznaèný identifikátor záznamu v tabulce, zatímco 
+nekandidátní klíè slouží pouze k odlišení jednotlivých záznamù.
+
+Napøíklad, pokud máme tabulku "Zamìstnanec", kandidátním klíèem mùže 
+ýt "ID zamìstnance", který je jedineèný pro každého zamìstnance. 
+Nekandidátním klíèem mùže být "Jméno zamìstnance", které mùže být stejné u více zamìstnancù.
+
+Tabulka "Zamìstnanec":
+
+ID zamìstnance	Jméno zamìstnance	Pozice	Plat
+1	Jan Novák	Programátor	50 000
+2	Petra Nová	Project Manager	80 000
+3	Martin Souèek	Tester	40 000
+
+V tomto pøíkladu je sloupec "ID zamìstnance" kandidátním klíèem, protože je jedineèný pro 
+každý záznam a sloupec "Jméno zamìstnance" je nekandidátním klíèem, 
+protože mùže být stejný u více zamìstnancù.
+
+-----------------------------------------------------------------------------------------------
+POSTUP:
+
+1) Tabulky Vlastnik, Prodejce, Uzivatel, Nemovitost obsahují shodné sloupce pro uložení adresy.
+proto vznikne nová tabulka Adresa, a tyto sloupce budou nahrazeny cizím klíèem.
+Jedna tabulka pro adresy bude proto, že by v DB mohly vznikat duplicitní adresy,
+pokud by byla samostatná tabulka pro každou z entit obsahující adresu.
+
+2) Tabulka Nemovitost obsahuje informaci o typu objektu (dùm, pozemek) a 
+typu typu objektu (louka, les, 3 pokoje, 1+1...) Tyto dva sloupce nejsou závislé na primárním klíèi
+(v kontextu tabulky nedávají smysl), proto je lze oddìlit do samostatné tabulky TypNemovitosti
+
+3) Tabulka Nemovitost obsahuje atributy Stav, Parkovani, EnergetickaNarocnost, které mají závislost
+na primárním klíèí (nemovitosti), ale nemají souvislost z atributem IdAdresa. Vytvoøím proto novou tabulku 
+NemovitostInfo a tyto atributy do ní pøenesu
+
+4) Tabulka Aukce obsahuje sloupce MinimalniPrihoz,PocatecniCena,Nazev, které jsou závislé 
+na primárním klíèi,ale nezávisí na atributech IdNemovitost, DatumZacatek, CasZacatek, 
+DatumKonec a CasKonec.Proto vytvoøím novou tabulku AukceInfo, kam tyto atributy pøesunu

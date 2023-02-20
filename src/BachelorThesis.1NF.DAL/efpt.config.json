@@ -1,0 +1,61 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "BachelorThesis1NFDBContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "EF",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "BachelorThesis._1NF.DAL",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Aukce]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Nemovitost]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prihoz]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prodejce]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Uzivatel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Vlastnik]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "BachelorThesis.1NF.DB\\BachelorThesis.1NF.DB.sqlproj",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

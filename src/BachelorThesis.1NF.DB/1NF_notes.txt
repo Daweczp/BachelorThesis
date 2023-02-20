@@ -1,0 +1,11 @@
+První normální forma (1NF) je základní stupeò normalizace databáze, 
+kterı se zabıvá odstranìním duplicitních dat. Cílem 1NF je zajistit, 
+aby kadı atribut (sloupec) v tabulce mìl jen jednu hodnotu a e se ádná data neopakují. 
+
+Toto zajišuje, e data v databázi jsou jednoznaènì identifikovatelná 
+a e je moné vytváøet pøímé vazby mezi tabulkami pomocí cizích klíèù.
+
+1NF se snaí zajistit, aby byly všechny údaje v databázi uloeny v tabulce 
+a aby kadı sloupec tabulky mìl pouze jednu hodnotu. To znamená, e pokud 
+tabulka obsahuje více sloupcù, kadı sloupec by mìl obsahovat pouze jednu 
+hodnotu a nemìl by obsahovat ádné sloité nebo více hodnot.

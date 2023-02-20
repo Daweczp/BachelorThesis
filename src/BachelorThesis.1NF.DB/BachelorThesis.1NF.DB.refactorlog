@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="58180f6c-95f1-401f-92ca-2fe0515155e9" ChangeDateTime="02/09/2023 11:50:02">
+    <Property Name="ElementName" Value="[dbo].[Agentura].[Jmen]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Agentura]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Jmeno" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f9b43c3e-20fa-4879-bb15-208bd45d7a7a" ChangeDateTime="02/09/2023 14:25:21">
+    <Property Name="ElementName" Value="[FirstNormalForm].[Prihoz].[DatumZacatek]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[FirstNormalForm].[Prihoz]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DatumPrihozu" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ec887f5e-b697-4951-b385-0ed765961c7d" ChangeDateTime="02/13/2023 18:06:13">
+    <Property Name="ElementName" Value="[dbo].[Prihoz].[Prihoz]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Prihoz]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CastkaPrihozu" />
+  </Operation>
+</Operations>

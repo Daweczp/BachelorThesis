@@ -1,0 +1,193 @@
+https://simplemaps.com/data/world-cities
+
+https://www.geodatasource.com/
+
+https://public.opendatasoft.com/explore/dataset/geonames-all-cities-with-a-population-1000/information/?disjunctive.cou_name_en&sort=name
+
+
+
+
+--- mock nástroj
+https://github.com/bchavez/Bogus
+--- sample data
+https://www.briandunning.com/sample-data/
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
+
+1) Jména osob 
+	https://www.onlinedatagenerator.com/home/demo
+
+2) Seznam ekonomických subjektù
+	https://www.czso.cz/csu/czso/registr-ekonomickych-subjektu-otevrena-data-dokumentace
+	https://opendata.czso.cz/data/od_org03/res_data.csv
+
+	Použité èíselníky a klasifikace – odkazy pro stažení obsahu:
+
+	Èíselník okresù -  kód èíselníku ÈSÚ 109: https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C
+
+	Právní forma organizace -  kód èíselníku ÈSÚ 56:  https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=56&typdat=0&datpohl=31.12.2021&cisjaz=203&format=2&separator=%2C
+
+	Èíselník krajù - kód èíselníku ÈSÚ 108 https://apl.czso.cz/iSMS/cisdata.jsp?kodcis=108
+
+- res_data.csv - seznam ekonomických subjektù
+- CIS0109_CS.csv - Èíselník okresù
+- CIS0056_CS.csv - Právní forma organizace
+- CIS0108_CS.csv - èíselník krajù
+!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+POSTUP IMPORTU DAT:
+
+- IMPORT DAT z registrù ekonomických subjektù do temp databáze
+	do tabulky res_data
+- IMPORT DAT z èíselníkù Èeského statistického úøadu do temp databáze
+	-	CIS0109_CS.csv = CIS0109_CS
+	-	CIS0056_CS.csv = CIS0056_CS
+	-	
+
+- Vznikla nová tabulka pro Spolecnost
+CREATE TABLE [dbo].[Spolecnost] -- seznam spoleèností
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+
+    [ObchodniJmeno] NVARCHAR(255) NULL,
+    [PravniForma] NVARCHAR(20) NOT NULL, 
+    [IC] NVARCHAR(20) NULL, 
+)
+která byla naplnìna následujícím dotazem:
+INSERT INTO Spolecnost (ObchodniJmeno, PravniForma, IC)
+SELECT rd.FIRMA,
+	   cis_pravni_forma.ZKRTEXT,
+	   rd.ICO
+FROM res_data rd
+JOIN CIS0056_CS cis_pravni_forma ON rd.FORMA = cis_pravni_forma.chodnota
+WHERE cis_pravni_forma.chodnota NOT IN (0, 101, 105) -- Zatím neurèeno, Fyz. os. podnikající dle živ. zákona, Fyz.osoba ost.
+	  AND LEN(cis_pravni_forma.ZKRTEXT) <= 20 -- aby se mi to vešlo do sloupeèku
+
+- Vznikla nová tabulka Adresa
+CREATE TABLE [dbo].[Adresa]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+
+	[Ulice] NVARCHAR(100) NULL,
+    [CisloPopisne] NVARCHAR(16) NULL,
+    [CisloOrientacni] NVARCHAR(16) NULL,
+    [PSC] NVARCHAR(16) NULL,
+    [Mesto] NVARCHAR(100) NULL,
+    [Okres] NVARCHAR(100) NULL,
+    [Kraj] NVARCHAR(100) NULL,
+    [Zeme] NVARCHAR(100) NULL
+)
+která byla naplnìna následujícím dotazem:
+INSERT INTO Adresa (Ulice, CisloPopisne, CisloOrientacni, PSC, Mesto, Okres, Kraj, Zeme)
+SELECT rd.ULICE_TEXT AS ulice,
+	   rd.CDOM AS cislo_popisne,
+	   rd.COR AS cislo_orientacni,
+	   rd.PSC,
+	   rd.OBEC_TEXT AS mesto,
+	   okres.TEXT AS okres,
+	   kraj.TEXT AS kraj,
+	   'Èeská republika' AS zeme	   
+FROM res_data rd 
+	 JOIN CIS0109_CS okres ON rd.OKRESLAU = okres.CHODNOTA
+	 JOIN CIS0108_CS kraj ON SUBSTRING(okres.CHODNOTA, 0, 6) = kraj.CHODNOTA
+WHERE rd.ULICE_TEXT IS NOT NULL
+
+tìmito kroky jsem získal cca tøi miliony adres a necelý milion spoleèností pro generování dat.
+
+Následnì je tøeba vygenerovat fiktivní jména osob. Na toto jsem použil nástroj 
+https://www.onlinedatagenerator.com/home/demo, kde jsem si vygeneroval 20 datasetù, 
+každý po 1000000 záznamech.Tyto jsem následnì importoval do nové tabulky TempOsoby.
+Z této tabulky jsem vygeneroval dataset unikátních jmen a prijmeni, emailù a telefonù
+
+SELECT * INTO Osoba
+FROM
+(
+SELECT t.Id,
+	   t.Jmeno, 
+	   t.Prijmeni,
+		t.CeleJmeno,
+		t.Pohlavi,
+		CAST((ABS(CHECKSUM(NEWID())) % 900000) + 100000 AS NVARCHAR(6)) + '/' + CAST(FLOOR(RAND(CHECKSUM(NEWID(), t.CeleJmeno)) * (2004 - 1900 + 1) + 1900) AS NVARCHAR(4)) AS RodneCislo,
+		REPLACE(t.Jmeno, ' ', '') + REPLACE(t.Prijmeni, ' ', '') AS Login,
+		CONVERT(NVARCHAR, CRYPT_GEN_RANDOM(16), 2) AS Heslo,
+		t.Jmeno + '.' + t.Prijmeni + '@mail.com' AS Email1,
+		CASE WHEN ABS(CHECKSUM(NEWID()) % 1000) % 3 = 0 THEN NULL ELSE t.Jmeno + '@' + t.Prijmeni + '.eu' END AS Email2,
+	   
+		'+420 ' + LEFT(CAST(ABS(CHECKSUM(NEWID()) % 90000000) + 10000000 AS VARCHAR(9)), 3) 
+				+ ' ' + SUBSTRING(CAST(ABS(CHECKSUM(NEWID()) % 90000000) + 10000000 AS VARCHAR(9)), 4, 3) 
+				+ ' ' + SUBSTRING(CAST(ABS(CHECKSUM(NEWID()) % 900000000) + 100000000 AS VARCHAR(9)), 7, 3) AS Telefon1,
+
+		CASE WHEN ABS(CHECKSUM(NEWID()) % 1000) % 2 = 0 
+		THEN NULL
+		ELSE '+420 ' + LEFT(CAST(ABS(CHECKSUM(NEWID()) % 90000000) + 10000000 AS VARCHAR(9)), 3) 
+				+ ' ' + SUBSTRING(CAST(ABS(CHECKSUM(NEWID()) % 90000000) + 10000000 AS VARCHAR(9)), 4, 3) 
+				+ ' ' + SUBSTRING(CAST(ABS(CHECKSUM(NEWID()) % 900000000) + 100000000 AS VARCHAR(9)), 7, 3) END AS Telefon2
+FROM 
+(
+SELECT jmena.Jmeno,
+	   prijmeni.Prijmeni,
+	   prijmeni.Pohlavi,
+	   jmena.Jmeno + ' ' + prijmeni.Prijmeni AS CeleJmeno,
+	   ROW_NUMBER() OVER (ORDER BY jmena.pohlavi) AS ID
+FROM TempOsoby jmena
+	 JOIN TempOsoby prijmeni ON jmena.Jmeno != prijmeni.Jmeno AND jmena.Pohlavi = prijmeni.Pohlavi
+) t) as x
+
+
+
+
+
+
+
+
+
+
+    https://stackoverflow.com/questions/16076309/import-multiple-csv-files-to-sql-server-from-a-folder
+   --BULK INSERT MULTIPLE FILES From a Folder 
+
+    --a table to loop thru filenames drop table ALLFILENAMES
+    CREATE TABLE ALLFILENAMES(WHICHPATH VARCHAR(255),WHICHFILE varchar(255))
+
+    --some variables
+    declare @filename varchar(255),
+            @path     varchar(255),
+            @sql      varchar(8000),
+            @cmd      varchar(1000)
+
+
+    --get the list of files to process:
+    SET @path = 'D:\Dev\DVGithub\BachelorThesis\sources\persons\'
+    SET @cmd = 'dir ' + @path + '*.csv /b'
+    INSERT INTO  ALLFILENAMES(WHICHFILE)
+    EXEC Master..xp_cmdShell @cmd
+    UPDATE ALLFILENAMES SET WHICHPATH = @path where WHICHPATH is null
+
+    --cursor loop
+    declare c1 cursor for SELECT WHICHPATH,WHICHFILE FROM ALLFILENAMES where WHICHFILE like '%.csv%'
+    open c1
+    fetch next from c1 into @path,@filename
+    While @@fetch_status <> -1
+      begin
+      --bulk insert won't take a variable name, so make a sql and execute it instead:
+       set @sql = 'BULK INSERT TempOsoby FROM ''' + @path + @filename + ''' '
+           + '     WITH ( 
+                   FIELDTERMINATOR = '','', 
+                   ROWTERMINATOR = ''\n'', 
+                   FIRSTROW = 2 
+                ) '
+    print @sql
+    exec (@sql)
+
+      fetch next from c1 into @path,@filename
+      end
+    close c1
+    deallocate c1
+
+
+    --Extras
+
+    --delete from ALLFILENAMES where WHICHFILE is NULL
+    select * from ALLFILENAMES
+    drop table ALLFILENAMES

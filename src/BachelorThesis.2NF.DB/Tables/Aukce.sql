@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Aukce]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+
+	[Nazev] NVARCHAR(255)  NOT NULL,
+	[MinimalniPrihoz] DECIMAL(18, 2) NOT NULL,
+	[PocatecniCena] DECIMAL(18, 2) NOT NULL,
+)

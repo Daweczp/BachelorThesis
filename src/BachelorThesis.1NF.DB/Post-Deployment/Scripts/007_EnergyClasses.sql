@@ -1,0 +1,7 @@
+﻿INSERT INTO @EnergetickaTrida(Trida) VALUES('A')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('B')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('C')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('D')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('E')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('F')
+INSERT INTO @EnergetickaTrida(Trida) VALUES('G')
