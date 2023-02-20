@@ -53,3 +53,14 @@ NemovitostInfo a tyto atributy do ní pøenesu
 4) Tabulka Aukce obsahuje sloupce MinimalniPrihoz,PocatecniCena,Nazev, které jsou závislé 
 na primárním klíèi,ale nezávisí na atributech IdNemovitost, DatumZacatek, CasZacatek, 
 DatumKonec a CasKonec.Proto vytvoøím novou tabulku AukceInfo, kam tyto atributy pøesunu
+
+5) Tabulky Vlastnik, Prodejce, Uzivatel obsahují jméno a pøíjmení pro identifikace. 
+Protože jedna osoba mùže být jak uživatel, tak prodejce, èi vlastník, mùže docházet
+k duplicitním záznamùm, proto tyto atributy vyjmu a založím novou tabulku Osoba
+
+9) Tabulky Vlastnik, Prodejce, Uzivatel obsahují sloupce Telefon1 a Telefon2.
+Formálnì tyto atributy neodporují 1NF, ani 2NF, nicménì 2NF klade dùraz na odstranìní duplicit,
+je vhodné z hlediska návrhu tyto sloupce dát do vlastní tabulky. Založím tedy 
+nové tabulky KontaktTelefon  Obdobný pøípad je s atributy Email1 a Email2. 
+Další vzniklé tabulky budou UzivatelTelefon, UzivatelEmail, VlastnikTelefon, VlastnikEmail,
+ProdejceTelefon, ProdejceEmail

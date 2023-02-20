@@ -17,7 +17,7 @@ DECLARE @i BIGINT,
 		@pocet_prodejcu BIGINT = 5000,
 		@pocet_nemovitosti BIGINT = 10000000,		
 		@multiplikator_nemovitost_aukce INT = 10,
-		@multiplikator_prihozu_aukce = 50,
+		@multiplikator_prihozu_aukce INT = 50,
 		
 		@aktualni_pocet_nemovitosti BIGINT,
 		@aktualni_pocet_aukci BIGINT
@@ -299,7 +299,7 @@ ALTER TABLE Aukce NOCHECK CONSTRAINT FK_Aukce_Vlastnik;
 
 WHILE @i < @multiplikator_nemovitost_aukce
 BEGIN
-	PRINT CAST((@i+1) AS VARCHAR) + '. iterace nemovitosti z ' + CAST(@multiplikator_nemovitost_aukce AS VARCHAR)
+	PRINT CAST((@i+1) AS VARCHAR) + '. iterace aukce z ' + CAST(@multiplikator_nemovitost_aukce AS VARCHAR)
 	WHILE @nemovitostFrom < @aktualni_pocet_nemovitosti
 	BEGIN
 		INSERT INTO Aukce WITH (TABLOCKX) (IdNemovitost
@@ -332,7 +332,7 @@ BEGIN
 				   (SELECT TOP 1 Id FROM Vlastnik /*ORDER BY ABS(CHECKSUM(NEWID(), t1.RandomValue))*/) AS IdVlastník,
 
 				   'Aukce_' + CAST(t1.RowNumber AS NVARCHAR(255)) AS Nazev,
-				   CAST(DATEADD(DAY, ABS(CHECKSUM(t1.RandomValue)) % DATEDIFF(DAY, '19000101', GETDATE()), '19000101') AS DATE) as DatumZacatek,
+				   CAST(DATEADD(DAY, ABS(CHECKSUM(t1.RandomValue)) % DATEDIFF(DAY, '19000101', GETDATE()), '19000101') AS DATE) AS DatumZacatek,
 				   CAST(DATEADD(MINUTE, ABS(CHECKSUM(t1.RandomValue)) % 86400000, '00:00:00') AS TIME) AS CasZacatek,
 
 				   CAST(DATEADD(MINUTE, ABS(CHECKSUM(t1.RandomValue)) % 86400000, '00:00:00') AS TIME) AS CasKonec,
@@ -368,5 +368,57 @@ ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Vlastnik;
 
 
 /* PLNĚNÍ TABULKY PRIHOZ */
+
+DECLARE @aukceFrom INT = 0,
+	    @aukceStep INT = 1000000
+
+SET @i = 0
+SELECT @aktualni_pocet_aukci = COUNT_BIG(1) FROM Aukce
+
+ALTER TABLE Prihoz NOCHECK CONSTRAINT FK_Prihoz_Aukce;
+ALTER TABLE Prihoz NOCHECK CONSTRAINT FK_Prihoz_Uzivatel;
+
+WHILE @i < @multiplikator_prihozu_aukce
+BEGIN 
+	PRINT CAST((@i+1) AS VARCHAR) + '. iterace prihozu aukce z ' + CAST(@multiplikator_prihozu_aukce AS VARCHAR)
+	
+	WHILE @aukceFrom < @aktualni_pocet_aukci
+	BEGIN		
+		INSERT INTO dbo.Prihoz WITH (TABLOCKX)(IdAukce
+											   ,IdUzivatel
+											   ,DatumPrihozu
+											   ,CasPrihozu
+											   ,CastkaPrihozu)
+		SELECT t1.Id AS IdAukce,
+			   (SELECT TOP 1 Id FROM Uzivatel) AS IdUzivatel,
+			   CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % (DATEDIFF(DAY, t1.DatumZacatek, t1.DatumKonec) + 1), t1.DatumZacatek) AS DATE) DatumPrihozu,
+			   CAST(DATEADD(SECOND, ABS(CHECKSUM(NEWID())) % (DATEDIFF(SECOND, '00:00:00', CAST(t1.CasKonec AS TIME)) + 1), '00:00:00') AS TIME) AS CasPrihozu,
+			   CAST(FLOOR(t1.RandomValue * 10000) + t1.MinimalniPrihoz + 1 AS DECIMAL(18,2))  AS CastkaPrihozu
+		FROM (SELECT au.Id,
+					 au.DatumZacatek,
+					 au.CasZacatek,
+					 au.DatumKonec,
+					 au.CasKonec,
+					 au.MinimalniPrihoz,
+					 RAND(CHECKSUM(NEWID(), au.Id)) AS RandomValue,
+					 ROW_NUMBER() OVER (ORDER BY au.Id) AS RowNumber
+			  FROM Aukce au
+		) AS t1
+		WHERE t1.RowNumber BETWEEN @aukceFrom AND @aukceFrom + @aukceStep
+
+
+		SET @aukceFrom += @aukceStep + 1
+	END
+
+	SET @i += 1
+	SET @aukceFrom = 0
+END
+
+UPDATE Prihoz
+	SET IdUzivatel = (SELECT TOP 1 Id FROM Uzivatel ORDER BY ABS(CHECKSUM(NEWID(), Id)))
+FROM Prihoz
+
+ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Aukce;
+ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Uzivatel;
 
 --ALTER DATABASE [$(DatabaseName)] SET RECOVERY FULL;

@@ -77,6 +77,15 @@
     <Build Include="Tables\TypNemovitosti.sql" />
     <Build Include="Tables\NemovitostInfo.sql" />
     <Build Include="Tables\AukceInfo.sql" />
+    <Build Include="Tables\Osoba.sql" />
+    <Build Include="Tables\KontaktTelefon.sql" />
+    <Build Include="Tables\KontaktEmail.sql" />
+    <Build Include="Tables\UzivatelTelefon.sql" />
+    <Build Include="Tables\UzivatelEmail.sql" />
+    <Build Include="Tables\VlastnikTelefon.sql" />
+    <Build Include="Tables\VlastnikEmail.sql" />
+    <Build Include="Tables\ProdejceTelefon.sql" />
+    <Build Include="Tables\ProdejceEmail.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BachelorThesis.2NF.DB.refactorlog" />
