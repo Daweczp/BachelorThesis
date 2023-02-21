@@ -15,7 +15,8 @@ Post-Deployment Script Template
 DECLARE @i BIGINT,
         @pocet_vlastniku BIGINT = 10000,
 		@pocet_prodejcu BIGINT = 5000,
-		@pocet_nemovitosti BIGINT = 10000000,		
+		--@pocet_nemovitosti BIGINT = 10000000,
+		@pocet_nemovitosti BIGINT = 1000000,
 		@multiplikator_nemovitost_aukce INT = 10,
 		@multiplikator_prihozu_aukce INT = 50,
 		
@@ -358,8 +359,8 @@ END
 PRINT N'Updting aukce data';
 
 UPDATE Aukce
-	SET IdProdejce = (SELECT TOP 1 Id FROM Prodejce ORDER BY ABS(CHECKSUM(NEWID(), Id))),
-		IdVlastnik = (SELECT TOP 1 Id FROM Vlastnik ORDER BY ABS(CHECKSUM(NEWID(), Id)))
+	SET IdProdejce = (SELECT TOP 1 Id FROM Prodejce ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/))),
+		IdVlastnik = (SELECT TOP 1 Id FROM Vlastnik ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/)))
 FROM Aukce
 
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Nemovitost;
@@ -415,7 +416,7 @@ BEGIN
 END
 
 UPDATE Prihoz
-	SET IdUzivatel = (SELECT TOP 1 Id FROM Uzivatel ORDER BY ABS(CHECKSUM(NEWID(), Id)))
+	SET IdUzivatel = (SELECT TOP 1 Id FROM Uzivatel ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/)))
 FROM Prihoz
 
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Aukce;
