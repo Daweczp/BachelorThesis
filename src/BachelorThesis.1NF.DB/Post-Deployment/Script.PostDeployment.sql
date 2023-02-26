@@ -238,6 +238,7 @@ PRINT N'Creating Nemovitost data';
 SELECT @aktualni_pocet_nemovitosti = COUNT_BIG(1) FROM Nemovitost
 WHILE @aktualni_pocet_nemovitosti < @pocet_nemovitosti
 BEGIN
+	PRINT N'Current count of Nemovitost ' + CAST(@aktualni_pocet_nemovitosti AS VARCHAR);
 	INSERT INTO Nemovitost (TypObjektu
 							,TypTypuObjektu
 							,Parkovani
@@ -328,9 +329,9 @@ BEGIN
 			   t2.PocatecniCena	
 		FROM (
 			SELECT t1.IdNemovitost,
-				   
-				   (SELECT TOP 1 Id FROM Prodejce /*ORDER BY ABS(CHECKSUM(NEWID(), t1.RandomValue))*/) AS IdProdejce,
-				   (SELECT TOP 1 Id FROM Vlastnik /*ORDER BY ABS(CHECKSUM(NEWID(), t1.RandomValue))*/) AS IdVlastník,
+
+				   -1 IdProdejce,
+				   -1 IdVlastník,
 
 				   'Aukce_' + CAST(t1.RowNumber AS NVARCHAR(255)) AS Nazev,
 				   CAST(DATEADD(DAY, ABS(CHECKSUM(t1.RandomValue)) % DATEDIFF(DAY, '19000101', GETDATE()), '19000101') AS DATE) AS DatumZacatek,
@@ -351,17 +352,27 @@ BEGIN
 
 		SET @nemovitostFrom += @nemovitostStep + 1
 	END
-	PRINT @i
 	SET @i += 1
 	SET @nemovitostFrom = 0
 END
 
 PRINT N'Updting aukce data';
 
-UPDATE Aukce
-	SET IdProdejce = (SELECT TOP 1 Id FROM Prodejce ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/))),
-		IdVlastnik = (SELECT TOP 1 Id FROM Vlastnik ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/)))
-FROM Aukce
+UPDATE a
+	SET a.IdProdejce = p.IdProdejce,
+		a.IdVlastnik = v.IdVlastnik
+FROM 
+    (SELECT *, 
+		   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+	 FROM Aukce) a
+    JOIN 
+    (SELECT Id AS IdProdejce, 
+			ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+	 FROM Prodejce) p  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
+	JOIN 
+	(SELECT Id AS IdVlastnik, 
+		    ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+	 FROM Vlastnik) v  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
 
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Nemovitost;
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Prodejce;
@@ -391,7 +402,7 @@ BEGIN
 											   ,CasPrihozu
 											   ,CastkaPrihozu)
 		SELECT t1.Id AS IdAukce,
-			   (SELECT TOP 1 Id FROM Uzivatel) AS IdUzivatel,
+			   -1 AS IdUzivatel,
 			   CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % (DATEDIFF(DAY, t1.DatumZacatek, t1.DatumKonec) + 1), t1.DatumZacatek) AS DATE) DatumPrihozu,
 			   CAST(DATEADD(SECOND, ABS(CHECKSUM(NEWID())) % (DATEDIFF(SECOND, '00:00:00', CAST(t1.CasKonec AS TIME)) + 1), '00:00:00') AS TIME) AS CasPrihozu,
 			   CAST(FLOOR(t1.RandomValue * 10000) + t1.MinimalniPrihoz + 1 AS DECIMAL(18,2))  AS CastkaPrihozu
@@ -415,9 +426,18 @@ BEGIN
 	SET @aukceFrom = 0
 END
 
-UPDATE Prihoz
-	SET IdUzivatel = (SELECT TOP 1 Id FROM Uzivatel ORDER BY ABS(CHECKSUM(NEWID()/*, Id*/)))
-FROM Prihoz
+PRINT N'Updting prihoz data';
+
+UPDATE p
+	SET p.IdUzivatel = u.IdUzivatel
+FROM 
+    (SELECT *, 
+		   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+	 FROM Prihoz) p
+    JOIN 
+    (SELECT Id IdUzivatel, 
+			ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+	 FROM Uzivatel) u  ON ((p.RowNum - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
 
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Aukce;
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Uzivatel;

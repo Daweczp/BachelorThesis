@@ -3,9 +3,7 @@
 1)	tabulka musí být v první normální formì (1NF)
 2)	každý neklíèový atribut musí být plnì závislý na každém kandidátním klíèi 
 	(neklíèovým atributem rozumíme atribut, který není souèástí žádného kandidátního klíèe)
-
 	všechny ne-klíèové sloupce musí být funkènì závislé na celém primárním klíèi.
-
 
 
 Kandidátní klíè je jeden nebo více sloupcù, které lze použít jako primární klíè pro tabulku 
@@ -46,21 +44,40 @@ pokud by byla samostatná tabulka pro každou z entit obsahující adresu.
 typu typu objektu (louka, les, 3 pokoje, 1+1...) Tyto dva sloupce nejsou závislé na primárním klíèi
 (v kontextu tabulky nedávají smysl), proto je lze oddìlit do samostatné tabulky TypNemovitosti
 
-3) Tabulka Nemovitost obsahuje atributy Stav, Parkovani, EnergetickaNarocnost, které mají závislost
-na primárním klíèí (nemovitosti), ale nemají souvislost z atributem IdAdresa. Vytvoøím proto novou tabulku 
-NemovitostInfo a tyto atributy do ní pøenesu
-
-4) Tabulka Aukce obsahuje sloupce MinimalniPrihoz,PocatecniCena,Nazev, které jsou závislé 
-na primárním klíèi,ale nezávisí na atributech IdNemovitost, DatumZacatek, CasZacatek, 
-DatumKonec a CasKonec.Proto vytvoøím novou tabulku AukceInfo, kam tyto atributy pøesunu
-
-5) Tabulky Vlastnik, Prodejce, Uzivatel obsahují jméno a pøíjmení pro identifikace. 
+3) Tabulky Vlastnik, Prodejce, Uzivatel obsahují jméno a pøíjmení pro identifikace. 
 Protože jedna osoba mùže být jak uživatel, tak prodejce, èi vlastník, mùže docházet
 k duplicitním záznamùm, proto tyto atributy vyjmu a založím novou tabulku Osoba
 
-9) Tabulky Vlastnik, Prodejce, Uzivatel obsahují sloupce Telefon1 a Telefon2.
+4) Tabulky Vlastnik, Prodejce, Uzivatel obsahují sloupce Telefon1 a Telefon2.
 Formálnì tyto atributy neodporují 1NF, ani 2NF, nicménì 2NF klade dùraz na odstranìní duplicit,
 je vhodné z hlediska návrhu tyto sloupce dát do vlastní tabulky. Založím tedy 
-nové tabulky KontaktTelefon  Obdobný pøípad je s atributy Email1 a Email2. 
+nové tabulky KontaktTelefon. Obdobný pøípad je s atributy Email1 a Email2. 
 Další vzniklé tabulky budou UzivatelTelefon, UzivatelEmail, VlastnikTelefon, VlastnikEmail,
 ProdejceTelefon, ProdejceEmail
+
+5) Tabulka Prodejce obsahuje atributy ObchodniJmeno, IC a PravniForma. Abych odstranil redundanci dat
+založím nové tabulky PravniForma, Spolecnost a upravím tabulku Prodejce tak, aby odpovídala novým vazbám
+
+6) Tabulka Nemovitost obsahuje informaci o stavu nemovitosti. Tato data jsou také duplicitní a proto 
+založím novou tabulku StavNemovitosti, tak tato data pøesunu
+
+7) V novì vzniklé tabulce Adresa dochází k duplicitám. Postupoval jsem tedy takto:
+	a) Vytvoøím novou tabulku Zeme (Id, jmeno)
+	b) Vytvoøím novou tabulku Kraj (Id, jmeno)
+	c) Vytvoøím novou tabulku Okres (Id, jmeno)
+	d) Vytvoøím novou tabulku Ulice (Id, jmeno)
+	e) Atributy Mesto a PSC spolu souvisí, proto budou v nové tabulce spolu Mesto (Id, Jmeno, PSC)
+Tìmito kroky jsem snížil redundanci dat, nicménì kdybych nahradil atributy tabulky Adresa
+za cizí klíèe novì vzniklých tabulek, mùže mi docházet k porušení integrity daty a to tak, že 
+napøíklad mìsto Trutnov budu mít pøiøazené do Kralovehradeckého kraje a souèasnì do kraje Støedoèeského.
+Za tímto rozpadem je následující úvaha:
+	a) Jméno ulice mùže spadat do více mìst
+	b) Každé mìsto má své jedineèné PSÈ, každé mìsto je právì v jednom Okrese
+	c) Každý okres je právì v jednom kraji
+	d) Zemì je plnì závislá na adrese, napøíklad mìsto Springfield eixistuje v nìkolika státech
+		(Ohio, Oregon, Missouri...)
+	e) Èíslo orientaèní a èíslo popisné jsou plnì závislé na ulici a spolu s ní tvoøí unikátní kombinaci
+z tìchto dùvodù jsem udìlal následující kroky:
+	a) založil jsem novou tabulku OkresKraj
+	b) založil jsem novou tabulku MestoOkres
+Nyní lze pøistoupit k úpravì tabulky Adresa
