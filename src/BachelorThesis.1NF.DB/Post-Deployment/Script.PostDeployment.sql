@@ -357,7 +357,7 @@ BEGIN
 	UPDATE a
 		SET a.IdProdejce = p.IdProdejce,
 			a.IdVlastnik = v.IdVlastnik
-	FROM (SELECT TOP (1000000) IdProdejce,
+	FROM (SELECT TOP (10000) IdProdejce,
 							 IdVlastnik,
 			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
 		 FROM Aukce
@@ -431,7 +431,7 @@ WHILE EXISTS(SELECT 1 FROM Prihoz WHERE IdUzivatel = -1)
 	UPDATE p
 		SET p.IdUzivatel = u.IdUzivatel
 	FROM 
-		(SELECT TOP (1000000) IdUzivatel, 
+		(SELECT TOP (10000) IdUzivatel, 
 			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
 		 FROM Prihoz) p
 		JOIN 
