@@ -12,13 +12,17 @@ Post-Deployment Script Template
 
 --ALTER DATABASE [$(DatabaseName)] SET RECOVERY SIMPLE;
 
+SET NOCOUNT ON
+
 DECLARE @i BIGINT,
         @pocet_vlastniku BIGINT = 10000,
 		@pocet_prodejcu BIGINT = 5000,
-		--@pocet_nemovitosti BIGINT = 10000000,
-		@pocet_nemovitosti BIGINT = 1000000,
+		@pocet_nemovitosti BIGINT = 10000000,
+		--@pocet_nemovitosti BIGINT = 1000000,
+		--@pocet_nemovitosti BIGINT = 100000,
 		@multiplikator_nemovitost_aukce INT = 10,
 		@multiplikator_prihozu_aukce INT = 50,
+		--@multiplikator_prihozu_aukce INT = 10,
 		
 		@aktualni_pocet_nemovitosti BIGINT,
 		@aktualni_pocet_aukci BIGINT
@@ -54,12 +58,12 @@ DELETE FROM Prodejce
 DELETE FROM Uzivatel
 DELETE FROM Vlastnik
 
-DBCC CHECKIDENT ('Prihoz', RESEED, 0);
-DBCC CHECKIDENT ('Aukce', RESEED, 0);
-DBCC CHECKIDENT ('Nemovitost', RESEED, 0);
-DBCC CHECKIDENT ('Prodejce', RESEED, 0);
-DBCC CHECKIDENT ('Uzivatel', RESEED, 0);
-DBCC CHECKIDENT ('Vlastnik', RESEED, 0);
+DBCC CHECKIDENT ('Prihoz', RESEED, 1);
+DBCC CHECKIDENT ('Aukce', RESEED, 1);
+DBCC CHECKIDENT ('Nemovitost', RESEED, 1);
+DBCC CHECKIDENT ('Prodejce', RESEED, 1);
+DBCC CHECKIDENT ('Uzivatel', RESEED, 1);
+DBCC CHECKIDENT ('Vlastnik', RESEED, 1);
 
 /* PLNĚNÍ TABULKY VLASTNÍK */
 
@@ -266,25 +270,15 @@ END
 PRINT N'Updating Nemovitost stav';
 -- doplním pro nepozemky číslo popisná, orientační, stav nemovitosti a energetickou třídu
 UPDATE t
-SET t.CisloPopisne = t1.CisloPopisne,
-	t.CisloOrientacni = t1.CisloOrientacni,
+SET t.CisloPopisne = ng.CisloPopisne,
+	t.CisloOrientacni = ng.CisloOrientacni,
 	Stav = (SELECT TOP 1 Stav FROM @StavBudovy ORDER BY ABS(CHECKSUM(NEWID(), Id))),
 	EnergetickaNarocnost = (SELECT TOP 1 Trida FROM @EnergetickaTrida ORDER BY ABS(CHECKSUM(NEWID(), Id)))
 FROM Nemovitost t
 	 JOIN(SELECT n.Id,
-			     ng.*,
 			     ROW_NUMBER() OVER (ORDER BY n.Id DESC) AS CisloPopisne,
 			     ROW_NUMBER() OVER (ORDER BY n.Id ASC) AS CisloOrientacni
-		  FROM Nemovitost n
-			   JOIN (SELECT n1.Ulice, 
-				  		    n1.PSC,
-						    n1.TypObjektu
-				     FROM Nemovitost n1
-					 WHERE n1.TypObjektu != 'Pozemek'
-				     GROUP BY n1.Ulice, n1.PSC, n1.TypObjektu, n1.TypTypuObjektu) ng ON n.Ulice = ng.Ulice 
-																					    AND n.PSC = ng.PSC
-																					    AND n.TypObjektu = ng.TypObjektu
-		  WHERE n.TypObjektu != 'Pozemek') AS t1 on t.Id = t1.Id
+		  FROM Nemovitost n) ng on t.Id = ng.Id
 WHERE t.TypObjektu != 'Pozemek'
 
 /* PLNĚNÍ TABULKY AUKCE */
@@ -358,21 +352,25 @@ END
 
 PRINT N'Updting aukce data';
 
-UPDATE a
-	SET a.IdProdejce = p.IdProdejce,
-		a.IdVlastnik = v.IdVlastnik
-FROM 
-    (SELECT *, 
-		   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-	 FROM Aukce) a
-    JOIN 
-    (SELECT Id AS IdProdejce, 
-			ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-	 FROM Prodejce) p  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
-	JOIN 
-	(SELECT Id AS IdVlastnik, 
-		    ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-	 FROM Vlastnik) v  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
+WHILE EXISTS(SELECT 1 FROM Aukce a WHERE a.IdProdejce = -1)
+BEGIN
+	UPDATE a
+		SET a.IdProdejce = p.IdProdejce,
+			a.IdVlastnik = v.IdVlastnik
+	FROM (SELECT TOP (1000000) IdProdejce,
+							 IdVlastnik,
+			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+		 FROM Aukce
+		 WHERE IdProdejce = -1) a
+		JOIN 
+		(SELECT Id AS IdProdejce, 
+				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+		 FROM Prodejce) p  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
+		JOIN 
+		(SELECT Id AS IdVlastnik, 
+				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+		 FROM Vlastnik) v  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
+END
 
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Nemovitost;
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Prodejce;
@@ -428,18 +426,23 @@ END
 
 PRINT N'Updting prihoz data';
 
-UPDATE p
-	SET p.IdUzivatel = u.IdUzivatel
-FROM 
-    (SELECT *, 
-		   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-	 FROM Prihoz) p
-    JOIN 
-    (SELECT Id IdUzivatel, 
-			ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-	 FROM Uzivatel) u  ON ((p.RowNum - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
+WHILE EXISTS(SELECT 1 FROM Prihoz WHERE IdUzivatel = -1)
+	BEGIN
+	UPDATE p
+		SET p.IdUzivatel = u.IdUzivatel
+	FROM 
+		(SELECT TOP (1000000) IdUzivatel, 
+			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+		 FROM Prihoz) p
+		JOIN 
+		(SELECT Id IdUzivatel, 
+				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+		 FROM Uzivatel) u  ON ((p.RowNum - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
+END
 
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Aukce;
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Uzivatel;
 
 --ALTER DATABASE [$(DatabaseName)] SET RECOVERY FULL;
+
+SET NOCOUNT OFF
