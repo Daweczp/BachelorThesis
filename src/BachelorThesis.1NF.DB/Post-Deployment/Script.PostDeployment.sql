@@ -170,7 +170,7 @@ FROM(SELECT TOP(@pocet_prodejcu)
 			CASE WHEN j.Id % 4 = 0 THEN '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID(), p.Id)) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) ELSE NULL END AS Telefon2
 	FROM @KrestniJmena j CROSS JOIN @PrijmeniJmena p
 	WHERE NOT EXISTS(SELECT 1 
-						FROM Vlastnik v
+						FROM Vlastnik v WITH (NOLOCK)
 						WHERE v.Jmeno = j.Jmeno
 							AND v.Prijmeni = p.Prijmeni)) AS T
 ORDER BY NEWID()
@@ -228,13 +228,13 @@ FROM (SELECT t1.login AS login,
 					 p.Id as IdP
 			   FROM @KrestniJmena j CROSS JOIN @PrijmeniJmena p
 			   WHERE NOT EXISTS(SELECT 1
-		  						FROM (SELECT Jmeno, Prijmeni
-									  FROM Prodejce prod
+		  						FROM (SELECT Jmeno, Prijmeni 
+									  FROM Prodejce prod WITH (NOLOCK)
 									  WHERE prod.Jmeno IS NOT NULL
 							  				AND prod.Prijmeni IS NOT NULL
 									   UNION ALL
 									   SELECT Jmeno, Prijmeni
-									   FROM Vlastnik vlas
+									   FROM Vlastnik vlas WITH (NOLOCK)
 									   WHERE vlas.Jmeno IS NOT NULL
 											 AND vlas.Prijmeni IS NOT NULL) t
 								WHERE t.Jmeno = j.Jmeno
@@ -351,13 +351,13 @@ BEGIN
 				  FROM (SELECT Id AS IdNemovitost,
 							   RAND(CHECKSUM(NEWID(), Id)) AS RandomValue,
 							   ROW_NUMBER() OVER (ORDER BY Id) AS RowNumber
-						FROM Nemovitost) n				  	   
+						FROM Nemovitost WITH (NOLOCK)) n				  	   
 					   JOIN (SELECT Id AS IdProdejce, 
 									ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-							 FROM Prodejce) p  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
+							 FROM Prodejce WITH (NOLOCK)) p  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
 					   JOIN 	(SELECT Id AS IdVlastnik, 
 									ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-							 FROM Vlastnik) v  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
+							 FROM Vlastnik WITH (NOLOCK)) v  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
 				  ) AS t1
 			WHERE t1.RowNumber BETWEEN @nemovitostFrom AND @nemovitostFrom + @nemovitostStep
 		) t2
@@ -377,7 +377,7 @@ ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Vlastnik;
 /* PLNĚNÍ TABULKY PRIHOZ */
 
 DECLARE @aukceFrom INT = 0,
-	    @aukceStep INT = 1000000
+	    @aukceStep INT = 10000000
 
 SET @i = 0
 SELECT @aktualni_pocet_aukci = COUNT_BIG(1) FROM Aukce
@@ -418,10 +418,10 @@ BEGIN
 						   au.MinimalniPrihoz,
 						   RAND(CHECKSUM(NEWID(), au.Id)) AS RandomValue,
 						   ROW_NUMBER() OVER (ORDER BY au.Id) AS RowNumber
-					FROM Aukce au) a
+					FROM Aukce au WITH (NOLOCK)) a
 				   JOIN (SELECT Id IdUzivatel, 
 								ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-						 FROM Uzivatel) u  ON ((a.RowNumber - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
+						 FROM Uzivatel WITH (NOLOCK)) u  ON ((a.RowNumber - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
 		) AS t1
 		WHERE t1.RowNumber BETWEEN @aukceFrom AND @aukceFrom + @aukceStep
 
