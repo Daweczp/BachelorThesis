@@ -51,23 +51,29 @@ DECLARE @EnergetickaTrida TABLE (Id INT PRIMARY KEY IDENTITY, Trida NVARCHAR(50)
 
 /* VYMAZ SOUCASNE DATABAZE */
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - ' + N'DELETE Prihoz' 
 DELETE FROM Prihoz
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Aukce' 
 DELETE FROM Aukce
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Nemovitost' 
 DELETE FROM Nemovitost
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Prodejce' 
 DELETE FROM Prodejce
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Uzivatel' 
 DELETE FROM Uzivatel
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Vlastnik' 
 DELETE FROM Vlastnik
 
-DBCC CHECKIDENT ('Prihoz', RESEED, 1);
-DBCC CHECKIDENT ('Aukce', RESEED, 1);
-DBCC CHECKIDENT ('Nemovitost', RESEED, 1);
-DBCC CHECKIDENT ('Prodejce', RESEED, 1);
-DBCC CHECKIDENT ('Uzivatel', RESEED, 1);
-DBCC CHECKIDENT ('Vlastnik', RESEED, 1);
+DBCC CHECKIDENT ('Prihoz', RESEED, 0);
+DBCC CHECKIDENT ('Aukce', RESEED, 0);
+DBCC CHECKIDENT ('Nemovitost', RESEED, 0);
+DBCC CHECKIDENT ('Prodejce', RESEED, 0);
+DBCC CHECKIDENT ('Uzivatel', RESEED, 0);
+DBCC CHECKIDENT ('Vlastnik', RESEED, 0);
 
 /* PLNĚNÍ TABULKY VLASTNÍK */
 
-PRINT N'Creating Vlastnik data';
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Vlastnik data';
 INSERT INTO Vlastnik (Jmeno, 
 					Prijmeni, 
 					Ulice, 
@@ -110,7 +116,7 @@ FROM (SELECT TOP(@pocet_vlastniku) j.Jmeno,
 ORDER BY NEWID() 
 
 /* PLNĚNÍ TABULKY PRODEJCE */
-PRINT N'Creating Prodejce data';
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Prodejce data';
 
 INSERT INTO Prodejce (Jmeno
 					,Prijmeni
@@ -170,7 +176,7 @@ FROM(SELECT TOP(@pocet_prodejcu)
 ORDER BY NEWID()
 
 /* PLNĚNÍ TABULKY UZIVATEL */
-PRINT N'Creating Uzivatel data';
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Uzivatel data';
 INSERT INTO dbo.Uzivatel (Login
 						,Heslo
 						,Jmeno
@@ -237,12 +243,12 @@ FROM (SELECT t1.login AS login,
 ORDER BY NEWID()
 
 /* PLNĚNÍ TABULKY NEMOVITOST */
-PRINT N'Creating Nemovitost data';
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Nemovitost data';
 
 SELECT @aktualni_pocet_nemovitosti = COUNT_BIG(1) FROM Nemovitost
 WHILE @aktualni_pocet_nemovitosti < @pocet_nemovitosti
 BEGIN
-	PRINT N'Current count of Nemovitost ' + CAST(@aktualni_pocet_nemovitosti AS VARCHAR);
+	PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Nemovitost pocet' + CAST(@aktualni_pocet_nemovitosti AS VARCHAR);
 	INSERT INTO Nemovitost (TypObjektu
 							,TypTypuObjektu
 							,Parkovani
@@ -267,7 +273,7 @@ BEGIN
 	SET @aktualni_pocet_nemovitosti += @@ROWCOUNT
 END
 
-PRINT N'Updating Nemovitost stav';
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  +  N'Updating Nemovitost stav';
 -- doplním pro nepozemky číslo popisná, orientační, stav nemovitosti a energetickou třídu
 UPDATE t
 SET t.CisloPopisne = ng.CisloPopisne,
@@ -295,7 +301,7 @@ ALTER TABLE Aukce NOCHECK CONSTRAINT FK_Aukce_Vlastnik;
 
 WHILE @i < @multiplikator_nemovitost_aukce
 BEGIN
-	PRINT CAST((@i+1) AS VARCHAR) + '. iterace aukce z ' + CAST(@multiplikator_nemovitost_aukce AS VARCHAR)
+	PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + CAST((@i+1) AS VARCHAR) + '. iterace aukce z ' + CAST(@multiplikator_nemovitost_aukce AS VARCHAR)
 	WHILE @nemovitostFrom < @aktualni_pocet_nemovitosti
 	BEGIN
 		INSERT INTO Aukce WITH (TABLOCKX) (IdNemovitost
@@ -311,7 +317,7 @@ BEGIN
 		SELECT t2.IdNemovitost,	
 
 			   t2.IdProdejce,
-			   t2.IdVlastník,
+			   t2.IdVlastnik,
 			   t2.Nazev,
 			   t2.DatumZacatek,
 			   t2.CasZacatek,
@@ -324,8 +330,8 @@ BEGIN
 		FROM (
 			SELECT t1.IdNemovitost,
 
-				   -1 IdProdejce,
-				   -1 IdVlastník,
+				   t1.IdProdejce,
+				   t1.IdVlastnik,
 
 				   'Aukce_' + CAST(t1.RowNumber AS NVARCHAR(255)) AS Nazev,
 				   CAST(DATEADD(DAY, ABS(CHECKSUM(t1.RandomValue)) % DATEDIFF(DAY, '19000101', GETDATE()), '19000101') AS DATE) AS DatumZacatek,
@@ -337,10 +343,22 @@ BEGIN
 				   CAST(ROUND(((100000000 - 700000) * t1.RandomValue + 700000), 0) AS DECIMAL(18,2)) AS PocatecniCena,
 
 				   t1.RandomValue
-			FROM (SELECT n.Id AS IdNemovitost,
-						 RAND(CHECKSUM(NEWID(), n.Id)) AS RandomValue,
-						 ROW_NUMBER() OVER (ORDER BY n.Id) AS RowNumber
-				  FROM Nemovitost n) AS t1
+			FROM (SELECT n.IdNemovitost,
+				         p.IdProdejce,
+						 v.IdVlastnik,
+						 n.RowNumber,
+						 n.RandomValue
+				  FROM (SELECT Id AS IdNemovitost,
+							   RAND(CHECKSUM(NEWID(), Id)) AS RandomValue,
+							   ROW_NUMBER() OVER (ORDER BY Id) AS RowNumber
+						FROM Nemovitost) n				  	   
+					   JOIN (SELECT Id AS IdProdejce, 
+									ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+							 FROM Prodejce) p  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
+					   JOIN 	(SELECT Id AS IdVlastnik, 
+									ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
+							 FROM Vlastnik) v  ON ((n.RowNumber - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
+				  ) AS t1
 			WHERE t1.RowNumber BETWEEN @nemovitostFrom AND @nemovitostFrom + @nemovitostStep
 		) t2
 
@@ -350,27 +368,6 @@ BEGIN
 	SET @nemovitostFrom = 0
 END
 
-PRINT N'Updting aukce data';
-
-WHILE EXISTS(SELECT 1 FROM Aukce a WHERE a.IdProdejce = -1)
-BEGIN
-	UPDATE a
-		SET a.IdProdejce = p.IdProdejce,
-			a.IdVlastnik = v.IdVlastnik
-	FROM (SELECT TOP (10000) IdProdejce,
-							 IdVlastnik,
-			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-		 FROM Aukce
-		 WHERE IdProdejce = -1) a
-		JOIN 
-		(SELECT Id AS IdProdejce, 
-				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-		 FROM Prodejce) p  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Prodejce)) + 1 = p.RowNum
-		JOIN 
-		(SELECT Id AS IdVlastnik, 
-				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-		 FROM Vlastnik) v  ON ((a.RowNum - 1) % (SELECT COUNT(1) FROM Vlastnik)) + 1 = v.RowNum
-END
 
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Nemovitost;
 ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Prodejce;
@@ -390,7 +387,7 @@ ALTER TABLE Prihoz NOCHECK CONSTRAINT FK_Prihoz_Uzivatel;
 
 WHILE @i < @multiplikator_prihozu_aukce
 BEGIN 
-	PRINT CAST((@i+1) AS VARCHAR) + '. iterace prihozu aukce z ' + CAST(@multiplikator_prihozu_aukce AS VARCHAR)
+	PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + CAST((@i+1) AS VARCHAR) + '. iterace prihozu aukce z ' + CAST(@multiplikator_prihozu_aukce AS VARCHAR)
 	
 	WHILE @aukceFrom < @aktualni_pocet_aukci
 	BEGIN		
@@ -400,44 +397,39 @@ BEGIN
 											   ,CasPrihozu
 											   ,CastkaPrihozu)
 		SELECT t1.Id AS IdAukce,
-			   -1 AS IdUzivatel,
+			   t1.IdUzivatel AS IdUzivatel,
 			   CAST(DATEADD(DAY, ABS(CHECKSUM(NEWID())) % (DATEDIFF(DAY, t1.DatumZacatek, t1.DatumKonec) + 1), t1.DatumZacatek) AS DATE) DatumPrihozu,
 			   CAST(DATEADD(SECOND, ABS(CHECKSUM(NEWID())) % (DATEDIFF(SECOND, '00:00:00', CAST(t1.CasKonec AS TIME)) + 1), '00:00:00') AS TIME) AS CasPrihozu,
 			   CAST(FLOOR(t1.RandomValue * 10000) + t1.MinimalniPrihoz + 1 AS DECIMAL(18,2))  AS CastkaPrihozu
-		FROM (SELECT au.Id,
-					 au.DatumZacatek,
-					 au.CasZacatek,
-					 au.DatumKonec,
-					 au.CasKonec,
-					 au.MinimalniPrihoz,
-					 RAND(CHECKSUM(NEWID(), au.Id)) AS RandomValue,
-					 ROW_NUMBER() OVER (ORDER BY au.Id) AS RowNumber
-			  FROM Aukce au
+		FROM (SELECT a.Id,
+					 u.IdUzivatel,
+					 a.DatumZacatek,
+					 a.CasZacatek,
+					 a.DatumKonec,
+					 a.CasKonec,
+					 a.MinimalniPrihoz,
+					 a.RandomValue,
+					 a.RowNumber
+			  FROM (	SELECT au.Id,
+						   au.DatumZacatek,
+						   au.CasZacatek,
+						   au.DatumKonec,
+						   au.CasKonec,
+						   au.MinimalniPrihoz,
+						   RAND(CHECKSUM(NEWID(), au.Id)) AS RandomValue,
+						   ROW_NUMBER() OVER (ORDER BY au.Id) AS RowNumber
+					FROM Aukce au) a
+				   JOIN (SELECT Id IdUzivatel, 
+								ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
+						 FROM Uzivatel) u  ON ((a.RowNumber - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
 		) AS t1
 		WHERE t1.RowNumber BETWEEN @aukceFrom AND @aukceFrom + @aukceStep
-
 
 		SET @aukceFrom += @aukceStep + 1
 	END
 
 	SET @i += 1
 	SET @aukceFrom = 0
-END
-
-PRINT N'Updting prihoz data';
-
-WHILE EXISTS(SELECT 1 FROM Prihoz WHERE IdUzivatel = -1)
-	BEGIN
-	UPDATE p
-		SET p.IdUzivatel = u.IdUzivatel
-	FROM 
-		(SELECT TOP (10000) IdUzivatel, 
-			   ROW_NUMBER() OVER (ORDER BY Id) AS RowNum 
-		 FROM Prihoz) p
-		JOIN 
-		(SELECT Id IdUzivatel, 
-				ROW_NUMBER() OVER (ORDER BY Id) AS RowNum  
-		 FROM Uzivatel) u  ON ((p.RowNum - 1) % (SELECT COUNT(1) FROM Uzivatel)) + 1 = u.RowNum
 END
 
 ALTER TABLE Prihoz WITH CHECK CHECK CONSTRAINT FK_Prihoz_Aukce;
