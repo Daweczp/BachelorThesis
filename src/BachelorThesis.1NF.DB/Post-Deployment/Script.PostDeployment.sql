@@ -20,8 +20,8 @@ DECLARE @i BIGINT,
 		@pocet_nemovitosti BIGINT = 10000000,
 		--@pocet_nemovitosti BIGINT = 1000000,
 		--@pocet_nemovitosti BIGINT = 100000,
-		@multiplikator_nemovitost_aukce INT = 10,
-		@multiplikator_prihozu_aukce INT = 50,
+		@multiplikator_nemovitost_aukce BIGINT = 10,
+		@multiplikator_prihozu_aukce BIGINT = 20,
 		--@multiplikator_prihozu_aukce INT = 10,
 		
 		@aktualni_pocet_nemovitosti BIGINT,
@@ -289,8 +289,8 @@ WHERE t.TypObjektu != 'Pozemek'
 
 /* PLNĚNÍ TABULKY AUKCE */
 
-DECLARE @nemovitostFrom INT = 0,
-	    @nemovitostStep INT = 1000000
+DECLARE @nemovitostFrom BIGINT = 0,
+	    @nemovitostStep BIGINT = 1000000
 
 SET @i = 0
 SELECT @aktualni_pocet_nemovitosti = COUNT_BIG(1) FROM Nemovitost
@@ -376,8 +376,8 @@ ALTER TABLE Aukce WITH CHECK CHECK CONSTRAINT FK_Aukce_Vlastnik;
 
 /* PLNĚNÍ TABULKY PRIHOZ */
 
-DECLARE @aukceFrom INT = 0,
-	    @aukceStep INT = 10000000
+DECLARE @aukceFrom BIGINT = 0,
+	    @aukceStep BIGINT = 10000000
 
 SET @i = 0
 SELECT @aktualni_pocet_aukci = COUNT_BIG(1) FROM Aukce
