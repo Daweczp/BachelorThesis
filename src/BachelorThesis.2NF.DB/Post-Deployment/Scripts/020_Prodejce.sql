@@ -10,8 +10,8 @@ SELECT p.Id,
 		WHERE s.IC = p.IC 
 			  AND s.ObchodniJmeno = s.ObchodniJmeno
 			  AND pf.Nazev = p.PravniForma) AS IdSpolecnost
-FROM [1NF_BachelorThesis].[dbo].Prodejce p
-	 JOIN #AdresaProdejce a ON p.Id = a.IdProdejce
-	 JOIN #OsobaProjdece o ON p.Id = o.IdProdejce
+FROM [$(NF1DB)].[dbo].Prodejce p
+	 LEFT JOIN #AdresaProdejce a ON p.Id = a.IdProdejce
+	 LEFT JOIN #OsobaProdejce o ON p.Id = o.IdProdejce
 
 SET IDENTITY_INSERT Prodejce OFF

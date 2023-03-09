@@ -13,7 +13,7 @@ WHEN NOT MATCHED THEN
 	INSERT(Jmeno, Prijmeni)
 	VALUES(s.Jmeno, s.Prijmeni)
 OUTPUT s.IdProdejce, inserted.Id
-INTO #OsobaProjdece (IdProdejce, IdOsoba);
+INTO #OsobaProdejce (IdProdejce, IdOsoba);
 
 MERGE INTO Osoba AS t
 USING (SELECT Id AS IdUzivatel, Jmeno, Prijmeni FROM [$(NF1DB)].[dbo].Uzivatel) AS s

@@ -49,7 +49,7 @@ GO
 DROP TABLE IF EXISTS  #AdresaVlastnik
 GO
 
-DROP TABLE IF EXISTS  #OsobaProjdece
+DROP TABLE IF EXISTS  #OsobaProdejce
 GO
 DROP TABLE IF EXISTS  #OsobaUzivatel
 GO
@@ -61,7 +61,7 @@ CREATE TABLE #AdresaProdejce  (IdProdejce BIGINT NOT NULL UNIQUE, IdAdresa BIGIN
 CREATE TABLE #AdresaUzivatel  (IdUzivatel BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
 CREATE TABLE #AdresaVlastnik  (IdVlastnik BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
              
-CREATE TABLE #OsobaProjdece  (IdProdejce BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
+CREATE TABLE #OsobaProdejce  (IdProdejce BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
 CREATE TABLE #OsobaUzivatel  (IdUzivatel BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
 CREATE TABLE #OsobaVlastnik  (IdVlastnik BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
 
@@ -125,9 +125,6 @@ GO
 :r .\Scripts\020_Prodejce.sql
 GO
 
-:r .\Scripts\020_Prodejce.sql
-GO
-
 :r .\Scripts\021_ProdejceTelefon.sql
 GO
 
@@ -148,7 +145,7 @@ DROP TABLE #AdresaProdejce
 DROP TABLE #AdresaUzivatel
 DROP TABLE #AdresaVlastnik
       
-DROP TABLE #OsobaProjdece
+DROP TABLE #OsobaProdejce
 DROP TABLE #OsobaUzivatel
 DROP TABLE #OsobaVlastnik
 
