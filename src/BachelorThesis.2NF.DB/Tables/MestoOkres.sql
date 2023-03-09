@@ -3,9 +3,6 @@
 	[IdMesto] BIGINT NOT NULL,
 	[IdOkres] BIGINT NOT NULL,
 
-	CONSTRAINT [UQ_MestoOkres_Mesto] UNIQUE ([IdMesto]),
-	CONSTRAINT [UQ_MestoOkres_Okres] UNIQUE ([IdOkres]),
-	
 	CONSTRAINT [FK_MestoOkres_Mesto] FOREIGN KEY ([IdMesto]) REFERENCES [dbo].[Mesto](Id),
 	CONSTRAINT [FK_MestoOkres_Okres] FOREIGN KEY ([IdOkres]) REFERENCES [dbo].[Okres](Id),
 

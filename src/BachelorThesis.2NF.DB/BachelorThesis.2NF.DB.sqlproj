@@ -58,10 +58,35 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Post-Deployment" />
+    <Folder Include="Post-Deployment\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="2NF_popis_vyznam_tabulek.xlsx" />
     <None Include="2NF_notes.txt" />
+    <None Include="Post-Deployment\Scripts\001_Zeme.sql" />
+    <None Include="Post-Deployment\Scripts\002_Kraj.sql" />
+    <None Include="Post-Deployment\Scripts\004_Ulice.sql" />
+    <None Include="Post-Deployment\Scripts\005_Mesto.sql" />
+    <None Include="Post-Deployment\Scripts\006_OkresKraj.sql" />
+    <None Include="Post-Deployment\Scripts\007_MestoOkres.sql" />
+    <None Include="Post-Deployment\Scripts\008_Adresa.sql" />
+    <None Include="Post-Deployment\Scripts\009_Osoba.sql" />
+    <None Include="Post-Deployment\Scripts\010_KontaktTelefon.sql" />
+    <None Include="Post-Deployment\Scripts\011_KontaktEmail.sql" />
+    <None Include="Post-Deployment\Scripts\012_Uzivatel.sql" />
+    <None Include="Post-Deployment\Scripts\013_UzivatelTelefon.sql" />
+    <None Include="Post-Deployment\Scripts\014_UzivatelEmail.sql" />
+    <None Include="Post-Deployment\Scripts\015_Vlastnik.sql" />
+    <None Include="Post-Deployment\Scripts\016_VlastnikTelefon.sql" />
+    <None Include="Post-Deployment\Scripts\017_VlastnikEmail.sql" />
+    <None Include="Post-Deployment\Scripts\018_PravniForma.sql" />
+    <None Include="Post-Deployment\Scripts\019_Spolecnost.sql" />
+    <None Include="Post-Deployment\Scripts\020_Prodejce.sql" />
+    <None Include="Post-Deployment\Scripts\021_ProdejceTelefon.sql" />
+    <None Include="Post-Deployment\Scripts\022_ProdejceEmail.sql" />
+    <None Include="Post-Deployment\Scripts\023_TypNemovitosti.sql" />
+    <None Include="Post-Deployment\Scripts\024_StavNemovitosti.sql" />
+    <None Include="Post-Deployment\Scripts\025_Nemovitost.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
@@ -94,6 +119,7 @@
     <Build Include="Tables\Mesto.sql" />
     <Build Include="Tables\OkresKraj.sql" />
     <Build Include="Tables\MestoOkres.sql" />
+    <None Include="Post-Deployment\Scripts\003_Okres.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BachelorThesis.2NF.DB.refactorlog" />

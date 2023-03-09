@@ -9,3 +9,113 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+/*
+delete from Nemovitost
+delete from StavNemovitosti
+delete from TypNemovitosti
+delete from Prodejce
+delete from Spolecnost
+delete from PravniForma
+delete from VlastnikEmail
+delete from VlastnikTelefon
+delete from Vlastnik
+delete from UzivatelEmail
+delete from UzivatelTelefon
+delete from Uzivatel
+delete from KontaktEmail
+delete from KontaktTelefon
+delete from Osoba
+delete from Adresa
+delete from MestoOkres
+delete from OkresKraj
+delete from Mesto
+delete from Ulice
+delete from Okres
+delete from Kraj
+delete from Zeme
+*/
+
+:setvar NF1DB 1NF_BachelorThesis
+
+SET NOCOUNT ON
+
+:r .\Scripts\001_Zeme.sql
+GO
+
+:r .\Scripts\002_Kraj.sql
+GO
+
+:r .\Scripts\003_Okres.sql
+GO
+
+:r .\Scripts\004_Ulice.sql
+GO
+
+:r .\Scripts\005_Mesto.sql
+GO
+
+:r .\Scripts\006_OkresKraj.sql
+GO
+
+:r .\Scripts\007_MestoOkres.sql
+GO
+
+:r .\Scripts\008_Adresa.sql
+GO
+
+:r .\Scripts\009_Osoba.sql
+GO
+
+:r .\Scripts\010_KontaktTelefon.sql
+GO
+
+:r .\Scripts\011_KontaktEmail.sql
+GO
+
+:r .\Scripts\012_Uzivatel.sql
+GO
+
+:r .\Scripts\013_UzivatelTelefon.sql
+GO
+
+:r .\Scripts\014_UzivatelEmail.sql
+GO
+
+:r .\Scripts\015_Vlastnik.sql
+GO
+
+:r .\Scripts\016_VlastnikTelefon.sql
+GO
+
+:r .\Scripts\017_VlastnikEmail.sql
+GO
+
+:r .\Scripts\018_PravniForma.sql
+GO
+
+:r .\Scripts\019_Spolecnost.sql
+GO
+
+:r .\Scripts\020_Prodejce.sql
+GO
+
+:r .\Scripts\020_Prodejce.sql
+GO
+
+:r .\Scripts\021_ProdejceTelefon.sql
+GO
+
+:r .\Scripts\022_ProdejceEmail.sql
+GO
+
+:r .\Scripts\023_TypNemovitosti.sql
+GO
+
+:r .\Scripts\024_StavNemovitosti.sql
+GO
+
+:r .\Scripts\025_Nemovitost.sql
+GO
+
+SET NOCOUNT OFF

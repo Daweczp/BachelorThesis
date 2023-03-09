@@ -1,0 +1,15 @@
+﻿INSERT INTO Kraj (Jmeno)
+SELECT DISTINCT t.Kraj
+FROM(
+	SELECT DISTINCT Kraj
+	FROM [$(NF1DB)].[dbo].Nemovitost
+	UNION ALL
+	SELECT DISTINCT Kraj
+	FROM [$(NF1DB)].[dbo].Prodejce
+	UNION ALL
+	SELECT DISTINCT Kraj
+	FROM [$(NF1DB)].[dbo].Uzivatel
+	UNION ALL
+	SELECT DISTINCT Kraj
+	FROM [$(NF1DB)].[dbo].Vlastnik
+) AS t

@@ -1,6 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProdejceTelefon]
 (
-	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
 	[IdProdejce] BIGINT NOT NULL,
 	[IdKontaktTelefon] BIGINT NOT NULL,
 

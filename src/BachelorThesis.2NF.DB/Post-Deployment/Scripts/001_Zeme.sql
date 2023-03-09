@@ -1,0 +1,15 @@
+﻿INSERT INTO Zeme (Jmeno)
+SELECT DISTINCT t.Zeme
+FROM(
+	SELECT DISTINCT Zeme
+	FROM [$(NF1DB)].[dbo].Nemovitost
+	UNION ALL
+	SELECT DISTINCT Zeme
+	FROM [$(NF1DB)].[dbo].Prodejce
+	UNION ALL
+	SELECT DISTINCT Zeme
+	FROM [$(NF1DB)].[dbo].Uzivatel
+	UNION ALL
+	SELECT DISTINCT Zeme
+	FROM [$(NF1DB)].[dbo].Vlastnik
+) AS t

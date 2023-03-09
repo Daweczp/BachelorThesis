@@ -51,25 +51,25 @@ DECLARE @EnergetickaTrida TABLE (Id INT PRIMARY KEY IDENTITY, Trida NVARCHAR(50)
 
 /* VYMAZ SOUCASNE DATABAZE */
 
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - ' + N'DELETE Prihoz' 
-DELETE FROM Prihoz
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Aukce' 
-DELETE FROM Aukce
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Nemovitost' 
-DELETE FROM Nemovitost
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Prodejce' 
-DELETE FROM Prodejce
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Uzivatel' 
-DELETE FROM Uzivatel
-PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Vlastnik' 
-DELETE FROM Vlastnik
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - ' + N'DELETE Prihoz' 
+--DELETE FROM Prihoz
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Aukce' 
+--DELETE FROM Aukce
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Nemovitost' 
+--DELETE FROM Nemovitost
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Prodejce' 
+--DELETE FROM Prodejce
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Uzivatel' 
+--DELETE FROM Uzivatel
+--PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'DELETE Vlastnik' 
+--DELETE FROM Vlastnik
 
-DBCC CHECKIDENT ('Prihoz', RESEED, 0);
-DBCC CHECKIDENT ('Aukce', RESEED, 0);
-DBCC CHECKIDENT ('Nemovitost', RESEED, 0);
-DBCC CHECKIDENT ('Prodejce', RESEED, 0);
-DBCC CHECKIDENT ('Uzivatel', RESEED, 0);
-DBCC CHECKIDENT ('Vlastnik', RESEED, 0);
+--DBCC CHECKIDENT ('Prihoz', RESEED, 0);
+--DBCC CHECKIDENT ('Aukce', RESEED, 0);
+--DBCC CHECKIDENT ('Nemovitost', RESEED, 0);
+--DBCC CHECKIDENT ('Prodejce', RESEED, 0);
+--DBCC CHECKIDENT ('Uzivatel', RESEED, 0);
+--DBCC CHECKIDENT ('Vlastnik', RESEED, 0);
 
 /* PLNĚNÍ TABULKY VLASTNÍK */
 

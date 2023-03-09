@@ -1,0 +1,31 @@
+﻿INSERT INTO KontaktEmail (Email)
+SELECT DISTINCT t.Email1 AS Email
+FROM(
+	SELECT DISTINCT Email1
+	FROM [$(NF1DB)].[dbo].Prodejce
+	WHERE Email1 IS NOT NULL
+	UNION ALL
+	SELECT DISTINCT Email2
+	FROM [$(NF1DB)].[dbo].Prodejce
+	WHERE Email2 IS NOT NULL
+
+	UNION ALL
+
+	SELECT DISTINCT Email1
+	FROM [$(NF1DB)].[dbo].Vlastnik
+	WHERE Email1 IS NOT NULL
+	UNION ALL
+	SELECT DISTINCT Email2
+	FROM [$(NF1DB)].[dbo].Vlastnik
+	WHERE Email2 IS NOT NULL
+	
+	UNION ALL
+
+	SELECT DISTINCT Email1
+	FROM [$(NF1DB)].[dbo].Uzivatel
+	WHERE Email1 IS NOT NULL
+	UNION ALL
+	SELECT DISTINCT Email2
+	FROM [$(NF1DB)].[dbo].Uzivatel
+	WHERE Email2 IS NOT NULL
+) AS t
