@@ -1,23 +1,17 @@
-﻿INSERT INTO Prodejce(IdAdresa, IdOsoba, IdSpolecnost)
-SELECT t.IdAdresa,
-	   t.IdOsoba,
+﻿SET IDENTITY_INSERT Prodejce ON
+
+INSERT INTO Prodejce(Id, IdAdresa, IdOsoba, IdSpolecnost)
+SELECT p.Id,
+	   a.IdAdresa,
+	   o.IdOsoba,
 	   (SELECT s.id
 		FROM Spolecnost s 
 			 JOIN PravniForma pf ON s.IdPravniForma = pf.Id
-		WHERE s.IC = t.IC 
+		WHERE s.IC = p.IC 
 			  AND s.ObchodniJmeno = s.ObchodniJmeno
-			  AND pf.Nazev = t.PravniForma) AS IdSpolecnost
-FROM
-(
-	SELECT a.Id AS IdAdresa,
-		   o.Id AS IdOsoba,
-		   p.ObchodniJmeno,
-		   p.PravniForma,
-		   p.IC
-	FROM [$(NF1DB)].[dbo].Prodejce p
-	LEFT JOIN Osoba o ON o.Jmeno = p.Jmeno AND o.Prijmeni = p.Prijmeni
-	JOIN Adresa a ON a.CisloPopisne = p.CisloPopisne AND a.CisloOrientacni = p.CisloOrientacni
-	JOIN Zeme z ON a.IdZeme = z.Id AND z.Jmeno = p.Zeme
-	JOIN Ulice ul ON a.IdUlice = ul.Id AND ul.Jmeno = p.Ulice
-	JOIN Mesto m ON a.IdMesto = m.Id AND m.Jmeno = p.Mesto AND m.PSC = p.PSC
-) AS t
+			  AND pf.Nazev = p.PravniForma) AS IdSpolecnost
+FROM [1NF_BachelorThesis].[dbo].Prodejce p
+	 JOIN #AdresaProdejce a ON p.Id = a.IdProdejce
+	 JOIN #OsobaProjdece o ON p.Id = o.IdProdejce
+
+SET IDENTITY_INSERT Prodejce OFF

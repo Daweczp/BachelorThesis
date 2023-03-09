@@ -40,6 +40,31 @@ delete from Zeme
 
 SET NOCOUNT ON
 
+DROP TABLE IF EXISTS  #AdresaNemovitost
+GO
+DROP TABLE IF EXISTS  #AdresaProdejce
+GO
+DROP TABLE IF EXISTS  #AdresaUzivatel
+GO
+DROP TABLE IF EXISTS  #AdresaVlastnik
+GO
+
+DROP TABLE IF EXISTS  #OsobaProjdece
+GO
+DROP TABLE IF EXISTS  #OsobaUzivatel
+GO
+DROP TABLE IF EXISTS  #OsobaVlastnik
+GO
+
+CREATE TABLE #AdresaNemovitost (IdNemovitost BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
+CREATE TABLE #AdresaProdejce  (IdProdejce BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
+CREATE TABLE #AdresaUzivatel  (IdUzivatel BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
+CREATE TABLE #AdresaVlastnik  (IdVlastnik BIGINT NOT NULL UNIQUE, IdAdresa BIGINT NOT NULL)
+             
+CREATE TABLE #OsobaProjdece  (IdProdejce BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
+CREATE TABLE #OsobaUzivatel  (IdUzivatel BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
+CREATE TABLE #OsobaVlastnik  (IdVlastnik BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
+
 :r .\Scripts\001_Zeme.sql
 GO
 
@@ -117,5 +142,14 @@ GO
 
 :r .\Scripts\025_Nemovitost.sql
 GO
+
+DROP TABLE #AdresaNemovitost
+DROP TABLE #AdresaProdejce
+DROP TABLE #AdresaUzivatel
+DROP TABLE #AdresaVlastnik
+      
+DROP TABLE #OsobaProjdece
+DROP TABLE #OsobaUzivatel
+DROP TABLE #OsobaVlastnik
 
 SET NOCOUNT OFF
