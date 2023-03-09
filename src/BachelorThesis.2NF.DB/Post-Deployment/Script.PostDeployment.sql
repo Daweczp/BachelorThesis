@@ -14,6 +14,8 @@ Post-Deployment Script Template
 delete from Nemovitost
 delete from StavNemovitosti
 delete from TypNemovitosti
+delete from ProdejceEmail
+delete from ProdejceTelefon
 delete from Prodejce
 delete from Spolecnost
 delete from PravniForma
