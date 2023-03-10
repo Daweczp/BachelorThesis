@@ -28,25 +28,25 @@ DECLARE @i BIGINT,
 		@aktualni_pocet_aukci BIGINT
 
 DECLARE @KrestniJmena TABLE (Id INT, Jmeno NVARCHAR(100))
-:r .\Scripts\001_FirstNames.sql
+:r .\Scripts\Data\001_FirstNames.sql
 
 DECLARE @PrijmeniJmena TABLE (Id INT, Prijmeni NVARCHAR(100))
-:r .\Scripts\002_LastNames.sql
+:r .\Scripts\Data\002_LastNames.sql
 
 DECLARE @Adresy TABLE (Id BIGINT, Ulice NVARCHAR(100), PSC NVARCHAR(16),Mesto NVARCHAR(100),Kraj NVARCHAR(100),Zeme NVARCHAR(100), Okres NVARCHAR(100))
-:r .\Scripts\003_Adresses.sql
+:r .\Scripts\Data\003_Adresses.sql
 
 DECLARE @Spolecnosti TABLE (Id BIGINT, ObchodniJmeno NVARCHAR(255), PravniForma NVARCHAR(20),IC NVARCHAR(20))
-:r .\Scripts\004_Companies.sql
+:r .\Scripts\Data\004_Companies.sql
 
 DECLARE @TypObjektu TABLE (Id INT PRIMARY KEY IDENTITY, Typ NVARCHAR(50), TypTypu NVARCHAR(50))
-:r .\Scripts\005_ObjectTypes.sql
+:r .\Scripts\Data\005_ObjectTypes.sql
 
 DECLARE @StavBudovy TABLE (Id INT PRIMARY KEY IDENTITY, Stav NVARCHAR(50))
-:r .\Scripts\006_BuildingStates.sql
+:r .\Scripts\Data\006_BuildingStates.sql
 
 DECLARE @EnergetickaTrida TABLE (Id INT PRIMARY KEY IDENTITY, Trida NVARCHAR(50))
-:r .\Scripts\007_EnergyClasses.sql
+:r .\Scripts\Data\007_EnergyClasses.sql
 
 
 /* VYMAZ SOUCASNE DATABAZE */

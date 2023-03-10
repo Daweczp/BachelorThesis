@@ -121,6 +121,7 @@
     <Folder Include="Tables" />
     <Folder Include="Post-Deployment" />
     <Folder Include="Post-Deployment\Scripts" />
+    <Folder Include="Post-Deployment\Scripts\Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Nemovitost.sql" />
@@ -130,17 +131,17 @@
     <Build Include="Tables\Aukce.sql" />
     <Build Include="Tables\Prihoz.sql" />
     <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
-    <None Include="Post-Deployment\Scripts\006_BuildingStates.sql" />
+    <None Include="Post-Deployment\Scripts\Data\001_FirstNames.sql" />
+    <None Include="Post-Deployment\Scripts\Data\002_LastNames.sql" />
+    <None Include="Post-Deployment\Scripts\Data\003_Adresses.sql" />
+    <None Include="Post-Deployment\Scripts\Data\004_Companies.sql" />
+    <None Include="Post-Deployment\Scripts\Data\005_ObjectTypes.sql" />
+    <None Include="Post-Deployment\Scripts\Data\006_BuildingStates.sql" />
+    <None Include="Post-Deployment\Scripts\Data\007_EnergyClasses.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="1NF_notes.txt" />
     <None Include="1NF_popis_vyznam_tabulek.xlsx" />
-    <None Include="Post-Deployment\Scripts\002_LastNames.sql" />
-    <None Include="Post-Deployment\Scripts\001_FirstNames.sql" />
-    <None Include="Post-Deployment\Scripts\003_Adresses.sql" />
-    <None Include="Post-Deployment\Scripts\004_Companies.sql" />
-    <None Include="Post-Deployment\Scripts\005_ObjectTypes.sql" />
-    <None Include="Post-Deployment\Scripts\007_EnergyClasses.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BachelorThesis.1NF.DB.refactorlog" />
