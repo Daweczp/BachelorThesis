@@ -87,6 +87,8 @@
     <None Include="Post-Deployment\Scripts\023_TypNemovitosti.sql" />
     <None Include="Post-Deployment\Scripts\024_StavNemovitosti.sql" />
     <None Include="Post-Deployment\Scripts\025_Nemovitost.sql" />
+    <None Include="Post-Deployment\Scripts\026_Aukce.sql" />
+    <None Include="Post-Deployment\Scripts\027_Prihoz.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />

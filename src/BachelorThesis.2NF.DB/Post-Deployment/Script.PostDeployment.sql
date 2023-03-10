@@ -11,6 +11,8 @@ Post-Deployment Script Template
 */
 
 /*
+delete from Prihoz
+delete from Aukce
 delete from Nemovitost
 delete from StavNemovitosti
 delete from TypNemovitosti
@@ -140,6 +142,9 @@ GO
 GO
 
 :r .\Scripts\025_Nemovitost.sql
+GO
+
+:r .\Scripts\026_Aukce.sql
 GO
 
 DROP TABLE #AdresaNemovitost
