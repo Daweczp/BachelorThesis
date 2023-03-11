@@ -7,9 +7,9 @@ SELECT n.Id AS IdNemovitost,
 	   sn.Id AS IdStavNemovitosti,
 	   n.Parkovani,
 	   n.EnergetickaNarocnost
-FROM [1NF_BachelorThesis].[dbo].Nemovitost n
+FROM [$(NF1DB)].[dbo].Nemovitost n
 	 JOIN TypNemovitosti tn ON n.TypObjektu = tn.TypObjektu AND n.TypTypuObjektu = tn.TypTypuObjektu
 	 LEFT JOIN StavNemovitosti sn ON n.Stav = sn.Stav
 	 JOIN #AdresaNemovitost a ON n.Id = a.IdNemovitost
 
-SET IDENTITY_INSERT Nemovitost ON
+SET IDENTITY_INSERT Nemovitost OFF

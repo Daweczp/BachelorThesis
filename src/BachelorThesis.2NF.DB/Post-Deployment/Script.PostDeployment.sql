@@ -38,6 +38,38 @@ delete from Ulice
 delete from Okres
 delete from Kraj
 delete from Zeme
+
+select * from Zeme
+select * from Kraj
+select * from Okres
+select * from Ulice
+select * from Mesto
+select * from OkresKraj
+select * from MestoOkres
+select * from Adresa
+select * from Osoba
+select * from KontaktTelefon
+select * from KontaktEmail
+select * from Uzivatel
+select * from UzivatelTelefon
+select * from UzivatelEmail
+select * from Vlastnik
+select * from VlastnikTelefon
+select * from VlastnikEmail
+select * from PravniForma
+select * from Spolecnost
+select * from Prodejce
+select * from ProdejceTelefon
+select * from ProdejceEmail
+select * from TypNemovitosti
+select * from StavNemovitosti
+select * from Nemovitost
+select * from Aukce
+select * from Prihoz
+
+select COUNT_BIG(1) from Nemovitost
+select COUNT_BIG(1) from Aukce
+select COUNT_BIG(1) from Prihoz WITH (NOLOCK)
 */
 
 :setvar NF1DB 1NF_BachelorThesis
@@ -145,6 +177,9 @@ GO
 GO
 
 :r .\Scripts\026_Aukce.sql
+GO
+
+:r .\Scripts\027_Prihoz.sql
 GO
 
 DROP TABLE #AdresaNemovitost

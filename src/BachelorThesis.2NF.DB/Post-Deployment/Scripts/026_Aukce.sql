@@ -22,6 +22,6 @@ SELECT Id,
 	   CasZacatek, 
 	   DatumKonec, 
 	   CasKonec
-FROM [1NF_BachelorThesis].[dbo].Aukce WITH (NOLOCK)
+FROM [$(NF1DB)].[dbo].Aukce WITH (NOLOCK)
 
 SET IDENTITY_INSERT Aukce OFF
