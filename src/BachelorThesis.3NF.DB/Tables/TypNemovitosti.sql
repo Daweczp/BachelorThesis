@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[TypNemovitosti]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+	[TypObjektu] NVARCHAR(50) NOT NULL, 
+    [TypTypuObjektu] NVARCHAR(50) NOT NULL,
+)

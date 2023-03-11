@@ -17,6 +17,11 @@ hodnotu a nemìl by obsahovat žádné složité nebo více hodnot.
 
 kritéria:
 
-1.	Každý atribut (sloupec) v tabulce má jen jednu hodnotu. To znamená, že v žádném sloupci nesmí být více hodnot nebo opakování stejných hodnot.
-2.	Každý záznam (øádek) je unikátní. To znamená, že v žádném øádku nesmí být opakování stejných dat.
-3.	Všechny atributy (sloupce) musí být atomární. To znamená, že nesmí být rozdìleny na menší èásti. Napøíklad atribut "jméno" by mìl být uložen jako jednotlivý sloupec s hodnotou "Jan Novák" namísto toho, aby byl rozdìlen na dva sloupce "jméno" a "pøíjmení" s hodnotami "Jan" a "Novák".
+1.	Každý atribut (sloupec) v tabulce má jen jednu hodnotu. To znamená, 
+že v žádném sloupci nesmí být více hodnot nebo opakování stejných hodnot.
+2.	Každý záznam (øádek) je unikátní. To znamená, 
+že v žádném øádku nesmí být opakování stejných dat.
+3.	Všechny atributy (sloupce) musí být atomární. 
+To znamená, že nesmí být rozdìleny na menší èásti. Napøíklad atribut "jméno" by mìl být uložen 
+jako jednotlivý sloupec s hodnotou "Jan Novák" namísto toho, aby byl rozdìlen na 
+dva sloupce "jméno" a "pøíjmení" s hodnotami "Jan" a "Novák".

@@ -66,4 +66,33 @@
   <ItemGroup>
     <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Adresa.sql" />
+    <Build Include="Tables\Aukce.sql" />
+    <Build Include="Tables\KontaktEmail.sql" />
+    <Build Include="Tables\KontaktTelefon.sql" />
+    <Build Include="Tables\Kraj.sql" />
+    <Build Include="Tables\Mesto.sql" />
+    <Build Include="Tables\MestoOkres.sql" />
+    <Build Include="Tables\Nemovitost.sql" />
+    <Build Include="Tables\Okres.sql" />
+    <Build Include="Tables\OkresKraj.sql" />
+    <Build Include="Tables\Osoba.sql" />
+    <Build Include="Tables\PravniForma.sql" />
+    <Build Include="Tables\Prihoz.sql" />
+    <Build Include="Tables\Prodejce.sql" />
+    <Build Include="Tables\ProdejceEmail.sql" />
+    <Build Include="Tables\ProdejceTelefon.sql" />
+    <Build Include="Tables\Spolecnost.sql" />
+    <Build Include="Tables\StavNemovitosti.sql" />
+    <Build Include="Tables\TypNemovitosti.sql" />
+    <Build Include="Tables\Ulice.sql" />
+    <Build Include="Tables\Uzivatel.sql" />
+    <Build Include="Tables\UzivatelEmail.sql" />
+    <Build Include="Tables\UzivatelTelefon.sql" />
+    <Build Include="Tables\Vlastnik.sql" />
+    <Build Include="Tables\VlastnikEmail.sql" />
+    <Build Include="Tables\VlastnikTelefon.sql" />
+    <Build Include="Tables\Zeme.sql" />
+  </ItemGroup>
 </Project>

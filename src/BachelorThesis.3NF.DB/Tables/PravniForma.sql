@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[PravniForma]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+	[Nazev] NVARCHAR(20) NOT NULL, 
+
+	CONSTRAINT [UQ_PravniForma_Nazev] UNIQUE ([Nazev])
+)
