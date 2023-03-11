@@ -110,8 +110,14 @@ FROM (SELECT TOP(@pocet_vlastniku) j.Jmeno,
 			 (SELECT TOP 1 Mesto FROM @Adresy ORDER BY ABS(CHECKSUM(NEWID(), p.Id))) AS Mesto,			 
 			 j.Jmeno + p.Prijmeni + '@email.com' AS Email1,
 			 CASE WHEN p.Id % 3 = 0 THEN j.Jmeno + '@' + p.Prijmeni + '.eu' ELSE NULL END AS Email2,
-			 '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID())) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) Telefon1,
-			 CASE WHEN j.Id % 4 = 0 THEN '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID())) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) ELSE NULL END AS Telefon2
+			 '+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) Telefon1,
+			 CASE WHEN j.Id % 4 = 0 THEN '+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) ELSE NULL END AS Telefon2
 	FROM @KrestniJmena j CROSS JOIN @PrijmeniJmena p) AS T
 ORDER BY NEWID() 
 
@@ -166,8 +172,14 @@ FROM(SELECT TOP(@pocet_prodejcu)
 			(SELECT TOP 1 Mesto FROM @Adresy ORDER BY ABS(CHECKSUM(NEWID(), j.Id))) AS Mesto,
 			CASE WHEN j.id % 8 = 0 THEN j.Jmeno + p.Prijmeni + '@email.com' ELSE 'company@co' + CAST(p.Id AS NVARCHAR) + 'co' END AS Email1,
 			NULL AS Email2,
-			'+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID(), j.Id)) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) Telefon1,
-			CASE WHEN j.Id % 4 = 0 THEN '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID(), p.Id)) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) ELSE NULL END AS Telefon2
+			'+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) Telefon1,
+			CASE WHEN j.Id % 4 = 0 THEN '+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) ELSE NULL END AS Telefon2
 	FROM @KrestniJmena j CROSS JOIN @PrijmeniJmena p
 	WHERE NOT EXISTS(SELECT 1 
 						FROM Vlastnik v WITH (NOLOCK)
@@ -219,8 +231,14 @@ FROM (SELECT t1.login AS login,
 			   (SELECT TOP 1 Mesto FROM @Adresy ORDER BY ABS(CHECKSUM(NEWID(), t1.IdP))) AS Mesto,
 			   t1.Jmeno + t1.Prijmeni + '@email.com' AS Email1,
 			   CASE WHEN t1.IdJ % 3 = 0 THEN t1.Jmeno + '@' + t1.Prijmeni + '.eu' ELSE NULL END AS Email2,
-			   '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID(), t1.IdJ)) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) Telefon1,
-			   CASE WHEN t1.IdP % 4 = 0 THEN '+420 ' + STUFF(CAST(ABS(CHECKSUM(NEWID(), t1.IdP)) % 900000 + 100000 AS VARCHAR(6)), 4, 0, CHAR(32)) ELSE NULL END AS Telefon2
+			   '+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) Telefon1,
+			   CASE WHEN t1.IdP % 4 = 0 THEN '+42' + CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 9) + 1 AS VARCHAR(1)) + ' ' + 
+		     CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) + ' ' + 
+			 CAST(FLOOR(RAND(CHECKSUM(NEWID())) * 899) + 100 AS VARCHAR(3)) ELSE NULL END AS Telefon2
 		FROM (SELECT SUBSTRING(REPLACE(CAST(NEWID() AS nvarchar(36)), '-', ''), 1, ABS(CHECKSUM(NEWID(), j.Id)) % 39 + 10) AS login,
 					 j.Jmeno,
 					 p.Prijmeni,
