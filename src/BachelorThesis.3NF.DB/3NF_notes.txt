@@ -52,3 +52,6 @@ a) vznikne tabulka TypObjektu pro jednotlivé typy objektu
 b) vznikne tabulka TypTypuObjektu pro jednotlivé podtypy typù objektu
 
 Po rozdìlení pùvodní tabulky na tøi nové tabulky již sloupce TypObjektu a TypTypuObjektu v tabulce TypNemovitosti nejsou potøeba k urèení unikátního záznamu v této tabulce, protože tyto informace jsou již obsaženy v cizích klíèích TypObjektuId a TypTypuObjektuId, které odkazují na odpovídající záznamy v tabulkách TypObjektu a TypTypuObjektu. To znamená, že sloupce TypObjektu a TypTypuObjektu v tabulce TypNemovitosti jsou pouze informaèní a nemají tranzitivní závislosti na ostatních sloupcích této tabulky.
+
+
+5) Tìmito úpravami jsem rovnou splnil Boyce-Coddovu normální formu, protože v tuto chvíli jsou všechna data závislá jen na klíèi a nikoli mezi sebou = v relaci není více kandidátních klíèù a neexistuje spoleèní atribut kandidátního klíèe.
