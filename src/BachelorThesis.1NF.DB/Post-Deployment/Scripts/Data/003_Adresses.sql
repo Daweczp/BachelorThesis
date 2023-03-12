@@ -9494,7 +9494,7 @@ INSERT INTO @Adresy ([Ulice], [Mesto], [Psc], [Okres], [Kraj], [Zeme]) VALUES (N
 
 INSERT INTO @Adresy ([Ulice], [Mesto], [Psc], [Okres], [Kraj], [Zeme]) VALUES (N'Elektrárenská', N'Štěchovice', N'25207', N'Praha-západ', N'Středočeský kraj', N'Česká republika')
 
-INSERT INTO @Adresy ([Ulice], [Mesto], [Psc], [Okres], [Kraj], [Zeme]) VALUES (N'Družební', N'Olomouc', NULL, N'Olomouc', N'Olomoucký kraj', N'Česká republika')
+INSERT INTO @Adresy ([Ulice], [Mesto], [Psc], [Okres], [Kraj], [Zeme]) VALUES (N'Družební', N'Olomouc', N'77900', N'Olomouc', N'Olomoucký kraj', N'Česká republika')
 
 INSERT INTO @Adresy ([Ulice], [Mesto], [Psc], [Okres], [Kraj], [Zeme]) VALUES (N'Husova', N'Žatec', N'43801', N'Louny', N'Ústecký kraj', N'Česká republika')
 

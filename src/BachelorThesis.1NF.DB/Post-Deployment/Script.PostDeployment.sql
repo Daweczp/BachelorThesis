@@ -18,11 +18,8 @@ DECLARE @i BIGINT,
         @pocet_vlastniku BIGINT = 10000,
 		@pocet_prodejcu BIGINT = 5000,
 		@pocet_nemovitosti BIGINT = 10000000,
-		--@pocet_nemovitosti BIGINT = 1000000,
-		--@pocet_nemovitosti BIGINT = 100000,
 		@multiplikator_nemovitost_aukce BIGINT = 10,
 		@multiplikator_prihozu_aukce BIGINT = 20,
-		--@multiplikator_prihozu_aukce INT = 10,
 		
 		@aktualni_pocet_nemovitosti BIGINT,
 		@aktualni_pocet_aukci BIGINT
@@ -33,7 +30,7 @@ DECLARE @KrestniJmena TABLE (Id INT, Jmeno NVARCHAR(100))
 DECLARE @PrijmeniJmena TABLE (Id INT, Prijmeni NVARCHAR(100))
 :r .\Scripts\Data\002_LastNames.sql
 
-DECLARE @Adresy TABLE (Id BIGINT, Ulice NVARCHAR(100), PSC NVARCHAR(16),Mesto NVARCHAR(100),Kraj NVARCHAR(100),Zeme NVARCHAR(100), Okres NVARCHAR(100))
+DECLARE @Adresy TABLE (Ulice NVARCHAR(100), PSC NVARCHAR(16),Mesto NVARCHAR(100),Kraj NVARCHAR(100),Zeme NVARCHAR(100), Okres NVARCHAR(100))
 :r .\Scripts\Data\003_Adresses.sql
 
 DECLARE @Spolecnosti TABLE (Id BIGINT, ObchodniJmeno NVARCHAR(255), PravniForma NVARCHAR(20),IC NVARCHAR(20))
