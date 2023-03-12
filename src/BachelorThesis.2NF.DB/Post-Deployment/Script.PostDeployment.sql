@@ -101,85 +101,169 @@ CREATE TABLE #OsobaProdejce  (IdProdejce BIGINT NOT NULL UNIQUE, IdOsoba BIGINT 
 CREATE TABLE #OsobaUzivatel  (IdUzivatel BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
 CREATE TABLE #OsobaVlastnik  (IdVlastnik BIGINT NOT NULL UNIQUE, IdOsoba BIGINT NOT NULL)
 
+GO
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Zeme data';
+GO
+
 :r .\Scripts\001_Zeme.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Kraj data';
 GO
 
 :r .\Scripts\002_Kraj.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Okres data';
+GO
+
 :r .\Scripts\003_Okres.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Ulice data';
+GO
+
 :r .\Scripts\004_Ulice.sql
+GO
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Mesto data';
 GO
 
 :r .\Scripts\005_Mesto.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating OkresKraj data';
+GO
+
 :r .\Scripts\006_OkresKraj.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating MestoOkres data';
 GO
 
 :r .\Scripts\007_MestoOkres.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Adresa data';
+GO
+
 :r .\Scripts\008_Adresa.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Osoba data';
 GO
 
 :r .\Scripts\009_Osoba.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating KontaktTelefon data';
+GO
+
 :r .\Scripts\010_KontaktTelefon.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating KontaktEmail data';
 GO
 
 :r .\Scripts\011_KontaktEmail.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Uzivtel data';
+GO
+
 :r .\Scripts\012_Uzivatel.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating UzivatelTelefon data';
 GO
 
 :r .\Scripts\013_UzivatelTelefon.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating UzivatelEmail data';
+GO
+
 :r .\Scripts\014_UzivatelEmail.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Vlastnik data';
 GO
 
 :r .\Scripts\015_Vlastnik.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating VlastnikTelefon data';
+GO
+
 :r .\Scripts\016_VlastnikTelefon.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating VlastnikEmail data';
 GO
 
 :r .\Scripts\017_VlastnikEmail.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating PravniForma data';
+GO
+
 :r .\Scripts\018_PravniForma.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Spolecnost data';
 GO
 
 :r .\Scripts\019_Spolecnost.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Prodejce data';
+GO
+
 :r .\Scripts\020_Prodejce.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating ProdejceTelefon data';
 GO
 
 :r .\Scripts\021_ProdejceTelefon.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating ProdejceEmail data';
+GO
+
 :r .\Scripts\022_ProdejceEmail.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating TypNemovitosti data';
 GO
 
 :r .\Scripts\023_TypNemovitosti.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating StavNemovitosti data';
+GO
+
 :r .\Scripts\024_StavNemovitosti.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Nemovitost data';
 GO
 
 :r .\Scripts\025_Nemovitost.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Aukce data';
+GO
+
 :r .\Scripts\026_Aukce.sql
 GO
 
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Creating Priho data';
+GO
+
 :r .\Scripts\027_Prihoz.sql
+GO
+
+PRINT CAST(FORMAT(GETDATE(), 'hh:mm', 'cs-CS') AS VARCHAR) + ' - '  + N'Finish';
 GO
 
 DROP TABLE #AdresaNemovitost
