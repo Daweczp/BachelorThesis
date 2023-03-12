@@ -9,12 +9,12 @@
     [Parkovani] BIT NOT NULL, 
     [EnergetickaNarocnost] NCHAR(1) NULL, 
     
-    [Ulice] NVARCHAR(100) NULL,
+    [Ulice] NVARCHAR(100) NOT NULL,
     [CisloPopisne] NVARCHAR(16) NULL,
     [CisloOrientacni] NVARCHAR(16) NULL,
-    [PSC] NVARCHAR(16) NULL,
-    [Mesto] NVARCHAR(100) NULL,
-    [Okres] NVARCHAR(100) NULL,
-    [Kraj] NVARCHAR(100) NULL,
-    [Zeme] NVARCHAR(100) NULL,
+    [PSC] NVARCHAR(16) NOT NULL,
+    [Mesto] NVARCHAR(100) NOT NULL,
+    [Okres] NVARCHAR(100) NOT NULL,
+    [Kraj] NVARCHAR(100) NOT NULL,
+    [Zeme] NVARCHAR(100) NOT NULL,
 )
