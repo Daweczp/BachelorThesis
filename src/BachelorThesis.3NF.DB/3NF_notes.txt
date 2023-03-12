@@ -1,27 +1,54 @@
-První normální forma (1NF) je základní stupeò normalizace databáze, 
-kterı se zabıvá odstranìním duplicitních dat. Cílem 1NF je zajistit, 
-aby kadı atribut (sloupec) v tabulce mìl jen jednu hodnotu a e se ádná data neopakují. 
+Tøetí normální forma (3NF) je jedna z nejdùleitìjších normalizaèních forem, kterou se øídí návrh relaèních databází. Cílem této normální formy je minimalizovat redundanci dat v databázi a zlepšit tak její správu a vıkonnost.
 
-Toto zajišuje, e data v databázi jsou jednoznaènì identifikovatelná 
-a e je moné vytváøet pøímé vazby mezi tabulkami pomocí cizích klíèù.
+Všechny atributy, které nejsou souèástí primárního klíèe, musí bıt vzájemnì nezávislé a nemají ádné implicitní vztahy.
 
-První normální forma (1NF) je nejniší z normálních forem a zajišuje, 
-e v databázi nejsou ádné redundantní nebo nesprávnì strukturované údaje. 
-Je zamìøená na to, aby byla data uloena ve formì tabulky a aby v tabulce byly 
-pouze hodnoty jedné entity a aby v tabulce byla pouze jednoduchá data.
+Splnìní tìchto kritérií zaruèuje, e data jsou v tabulce reprezentována bez redundancí a je moné s nimi pracovat v rámci relaèního modelu bez problémù. Tøetí normální forma tedy pøináší vıhody v oblasti sniování redundance dat, zvyšování integritu dat, zlepšení vıkonnosti a správy databáze.
 
-1NF se snaí zajistit, aby byly všechny údaje v databázi uloeny v tabulce 
-a aby kadı sloupec tabulky mìl pouze jednu hodnotu. To znamená, e pokud 
-tabulka obsahuje více sloupcù, kadı sloupec by mìl obsahovat pouze jednu 
-hodnotu a nemìl by obsahovat ádné sloité nebo více hodnot.
+Kritéria pro splnìní tøetí normální formy jsou následující:
 
-kritéria:
+-	Tabulka musí bıt v druhé normální formì (2NF).
 
-1.	Kadı atribut (sloupec) v tabulce má jen jednu hodnotu. To znamená, 
-e v ádném sloupci nesmí bıt více hodnot nebo opakování stejnıch hodnot.
-2.	Kadı záznam (øádek) je unikátní. To znamená, 
-e v ádném øádku nesmí bıt opakování stejnıch dat.
-3.	Všechny atributy (sloupce) musí bıt atomární. 
-To znamená, e nesmí bıt rozdìleny na menší èásti. Napøíklad atribut "jméno" by mìl bıt uloen 
-jako jednotlivı sloupec s hodnotou "Jan Novák" namísto toho, aby byl rozdìlen na 
-dva sloupce "jméno" a "pøíjmení" s hodnotami "Jan" a "Novák".
+-	Veškerá data, která nejsou klíèem tabulky, musí bıt závislá pouze na celém primárním klíèi a ne na jeho èástech. To znamená, e veškeré atributy musí bıt závislé pouze na primárním klíèi a ne na jeho èástech. Tento krok minimalizuje redundanci dat v tabulce a zvyšuje tak její efektivitu.
+
+lze tedy øíci, e 
+	1) neklíèová data jsou závislá jen na klíèi a ne mezi sebou
+	2) Tabulka neobsahuje sloupce, které lze pøenést do jiné tabulky.
+
+nebo
+
+Všechna neklíèová data v tabulce jsou závislá jen na primárním klíèi a ne mezi sebou. To znamená, e kadı sloupec v tabulce by mìl bıt pøímo závislı pouze na celém primárním klíèi nebo jeho èásti.
+
+Tabulka neobsahuje sloupce, které lze pøenést do jiné tabulky, ani by byla narušena funkèní závislost dat v pùvodní tabulce. To znamená, e pokud nìjakı sloupec v tabulce závisí na jinıch sloupcích ne na primárním klíèi, mìl by bıt vyèlenìn do samostatné tabulky s vlastním primárním klíèem a relaèní vazbou na pùvodní tabulku.
+
+Kritéria pro splnìní tøetí normální formy jsou tedy:
+
+Kadı sloupec v tabulce je funkènì závislı pouze na primárním klíèi nebo jeho èásti.
+Tabulka neobsahuje sloupce, které jsou závislé na jinıch sloupcích ne na primárním klíèi.
+Pokud jsou v tabulce sloupce, které jsou vzájemnì závislé, musí bıt tyto sloupce vyèlenìny do samostatné tabulky.
+
+
+POSTUP Normalizace
+
+1) 
+Tabulka Aukce - V této tabulce jsou obsaeny tøi bloky informací, které spolu nesouvisí, ale souvisi s aukcí jako takovou. Jedná se o atributy, které definují podmínky aukce, tedy název, poèáteèní cenu a minimální pøíhoz. Dalším blokem jsou informace o nemovitosti, která jde do aukce, jejím vlastníkovi a jejím prodejci. Posledním blokem jsou datumy a èasy zaèátku a konce dané aukce. 
+
+Tabulka aukce se tedy rozpadne na tabulku AukceTerminy, kde budou datum èas konce a zaèátku. Tyto atributy jsou závislé pouze na aukci, která je primárním klíèem, nikoli však mezi sebou
+
+Z tabulky aukce se dále vyjmou údaje o nemovitosti a dají se do samostatné tabulky AukceNemovitost. Tato bude obsahovat informace o nemovitosti, která není závislá na ostatních atributech, informaci i prodejci a vlastníkovi. Prodejci a vlastníci se mohou èasem mìnit, nemovitost mùe bıt draena nìkolikrát, buï se stejnım prodejcem i vlastníkem (napøklad se na poprvé v aukci neprodá), stejnì tak ale s jinım prodejcem a vlastníkem (napøíklad novı vlastník se rozhodne prodat). Z tìchto dùvodù je nemovitost nezávislá na prodejci a vlastníkovi a souèasnì vlastník, èi prodejce není závaslı na nemovitosti, ale pouze na dané aukci. Atributy jsou tedy vzájemnì nezávislé.
+
+2)
+Tabulka Prodejce v tuto chvílí kombinuje prodejce jako spoleènost, èi jako osobu. Z toho vyplıvá, e aby data byla správnì uloena a byla dodrena integrita, musí bıt vyplnìn právì jeden ze sloupcù IdOsoba, nebo IdSpoleènost. Tuto závislost lze odstranit tak, e:
+	a) do tabulky prodejce zavedeme pøíznak, zda se jedná o spoleènost, èi osobu
+	b) vytvoøíme tabulku ProdejceOsoba, která ponese informace o prodejcích osobách
+	c) vytvoøíme tabulku ProdejceSpoleènost, která bude obsahovat údaje o prodejcích jako spoleènostech
+
+3)
+Tabulka Uzivatel obsahuje informace o osobì, adrese a pøihlašovací údaje. Tuto tabulku lze rozdìlit do logickıch celkù na údaje o osobì a na pøihlašovací údaje.
+Vznikne tedy tabulka UzivatelOsoba, kde budou údaje o osobì a její adrese
+
+4)
+Tabulka TypNemovitosti v tuto chvíli sice splòuje 2NF, ale mezi jejími sloupci existuje tranzitivní závislost. Proto je tøeba tuto tabulku rozdìlit na menší celky. 
+a) vznikne tabulka TypObjektu pro jednotlivé typy objektu
+b) vznikne tabulka TypTypuObjektu pro jednotlivé podtypy typù objektu
+
+Po rozdìlení pùvodní tabulky na tøi nové tabulky ji sloupce TypObjektu a TypTypuObjektu v tabulce TypNemovitosti nejsou potøeba k urèení unikátního záznamu v této tabulce, protoe tyto informace jsou ji obsaeny v cizích klíèích TypObjektuId a TypTypuObjektuId, které odkazují na odpovídající záznamy v tabulkách TypObjektu a TypTypuObjektu. To znamená, e sloupce TypObjektu a TypTypuObjektu v tabulce TypNemovitosti jsou pouze informaèní a nemají tranzitivní závislosti na ostatních sloupcích této tabulky.

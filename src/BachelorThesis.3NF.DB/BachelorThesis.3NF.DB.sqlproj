@@ -94,5 +94,12 @@
     <Build Include="Tables\VlastnikEmail.sql" />
     <Build Include="Tables\VlastnikTelefon.sql" />
     <Build Include="Tables\Zeme.sql" />
+    <Build Include="Tables\AukceTerminy.sql" />
+    <Build Include="Tables\AukceNemovitost.sql" />
+    <Build Include="Tables\ProdejceOsoba.sql" />
+    <Build Include="Tables\ProdejceSpolecnost.sql" />
+    <Build Include="Tables\UzivatelOsoba.sql" />
+    <Build Include="Tables\TypObjektu.sql" />
+    <Build Include="Tables\TypTypuObjektu.sql" />
   </ItemGroup>
 </Project>

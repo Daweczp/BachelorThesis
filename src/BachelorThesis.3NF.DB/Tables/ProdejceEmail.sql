@@ -5,4 +5,6 @@
 
 	CONSTRAINT [FK_ProdejceEmail_Vlastnik] FOREIGN KEY ([IdProdejce]) REFERENCES [dbo].[Prodejce](Id),
 	CONSTRAINT [FK_ProdejceEmail_KontaktTelefon] FOREIGN KEY ([IdKontaktEmail]) REFERENCES [dbo].[KontaktEmail](Id),
+
+	CONSTRAINT [PK_ProdejceEmail] PRIMARY KEY ([IdProdejce], [IdKontaktEmail])
 )
