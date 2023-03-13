@@ -15,7 +15,8 @@
 --FROM [$(NF1DB)].[dbo].Prihoz WITH (NOLOCK)
 
 DECLARE @prihozFrom BIGINT = 0,
-	    @prihozStep BIGINT = 10000000
+	    @prihozStep BIGINT = 10000000,
+		@aktualni_pocet_prihozu BIGINT
 
 SELECT @aktualni_pocet_prihozu = COUNT_BIG(1) FROM Prihoz
 
