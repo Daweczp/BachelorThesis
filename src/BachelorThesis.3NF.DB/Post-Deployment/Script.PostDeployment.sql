@@ -9,3 +9,15 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+/*
+
+*/
+
+:setvar NF2DB 2NF_BachelorThesis
+
+SET NOCOUNT ON
+
+
+
+SET NOCOUNT OFF

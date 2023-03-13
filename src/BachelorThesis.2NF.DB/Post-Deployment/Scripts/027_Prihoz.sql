@@ -46,7 +46,7 @@ BEGIN
 	) t
 	WHERE t.RowNumber BETWEEN @prihozFrom AND @prihozFrom + @prihozStep
 
-	SET @aukceFrom += @prihozStep + 1
+	SET @prihozFrom += @prihozStep + 1
 END
 
 
